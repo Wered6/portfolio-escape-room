@@ -189,7 +189,7 @@ WidgetAttachment->SetupAttachment(KeyMesh);
 There are several functions, but part of them is only meant to be overriden.  
 Part of them has their basic implementation in [interactable component](#interactable-component-code):
 
-### Can be overriden
+***Can be overriden***
 
 | Function                                                                                      | Description                                                                                                                                                                  |
 |-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
