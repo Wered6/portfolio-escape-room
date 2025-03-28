@@ -77,6 +77,7 @@ In both scenarios its works after setting up IMC and Input Actions.
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
 <details>
+<summary>Details</summary>
 
 The "Press" input action has a *Pressed* trigger, so it triggers only once.
 
