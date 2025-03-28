@@ -323,10 +323,10 @@ function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.c
 <details>
 <summary>Screens</summary>
 
-<div><img src="https://github.com/user-attachments/assets/926617e0-929a-4ee4-9410-863f7832a56c" width="150">
-<img src="https://github.com/user-attachments/assets/5e9be686-01f7-462d-83ce-8ce98bd0573a" width="700"></div> 
-<div><img src="https://github.com/user-attachments/assets/54e41b5d-e39a-420a-9a7e-11e6f2b81b2d" width="150">
-<img src="https://github.com/user-attachments/assets/0550f40a-ede3-4dd9-8ede-4a3fb1e5cd7f" width="700"></div>
+<img src="https://github.com/user-attachments/assets/926617e0-929a-4ee4-9410-863f7832a56c" width="150">
+<img src="https://github.com/user-attachments/assets/5e9be686-01f7-462d-83ce-8ce98bd0573a" width="700"><br>
+<img src="https://github.com/user-attachments/assets/54e41b5d-e39a-420a-9a7e-11e6f2b81b2d" width="150">
+<img src="https://github.com/user-attachments/assets/0550f40a-ede3-4dd9-8ede-4a3fb1e5cd7f" width="700">
 
 </details>
 
