@@ -37,16 +37,16 @@ private:
 	/**
 	 * Percentage of the foreground circle.
 	 */
-	UPROPERTY(EditAnywhere, Category="ER")
+	UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="1", ClampMin="0", ClampMax="1"), Category="ER")
 	float Percent{0.5f};
 	/**
 	 * Opacity of the foreground circle.
 	 */
-	UPROPERTY(EditAnywhere, Category="ER")
+	UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="1", ClampMin="0", ClampMax="1"), Category="ER")
 	float Opacity{1.f};
 	UPROPERTY(EditAnywhere, Category="ER")
 	FVector2D ImageSize{32.f, 32.f};
-	UPROPERTY(EditAnywhere, Category="ER")
+	UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="1", ClampMin="0", ClampMax="1"), Category="ER")
 	float BackgroundCircleOpacity{0.2f};
 
 	UPROPERTY()
