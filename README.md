@@ -264,21 +264,21 @@ in [Interactable Component](#interactable-component-code).
 <details>
 <summary>Can be overriden</summary>
 
-| Function                                                                                      | Description                                                                                                                                                                  |
-|-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [DisplayInteractionUI](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L38)   | has basic logic for showing widget and outline correct meshes, called when looking at interactable object                                                                    |
-| GetWidgetAttachment                                                                           | has NO basic logic, override it to provide custom widget location/attachment                                                                                                 |
-| [InteractPressStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L60)   | has basic logic for setting interact instigator, called as soon as we press interaction key                                                                                  |
-| InteractPressTriggered                                                                        | has NO basic logic, override it to provide interaction logic, called after InteractPressStarted                                                                              |
-| [InteractPressCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L71) | has basic logic for resetting interact instigator, called after InteractPressTriggered                                                                                       |
-| [InteractHoldStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L77)    | has basic logic for setting interact instigator and setting holding logic, called as soon as we press interaction key                                                        |
-| [InteractHoldOngoing](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L94)    | has basic logic for interpolating widget visuals, called every frame for [HoldTimeTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L85)          |
-| InteractHoldTriggered                                                                         | has NO basic logic, override it to provide interaction logic, called after [HoldTimeTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L85)        |
-| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L116)  | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered is never getting called |
-| [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L131) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                          |
+| Function                                                                                      | Description                                                                                                                                                                   |
+|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [DisplayInteractionUI](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L38)   | has basic logic for showing widget and outline correct meshes, called when looking at interactable object                                                                     |
+| GetWidgetAttachment                                                                           | has NO basic logic, override it to provide custom widget location/attachment                                                                                                  |
+| [InteractPressStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L60)   | has basic logic for setting interact instigator, called as soon as we press interaction key                                                                                   |
+| InteractPressTriggered                                                                        | has NO basic logic, override it to provide interaction logic, called after InteractPressStarted                                                                               |
+| [InteractPressCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L71) | has basic logic for resetting interact instigator, called after InteractPressTriggered                                                                                        |
+| [InteractHoldStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L77)    | has basic logic for setting interact instigator and setting holding logic, called as soon as we press interaction key                                                         |
+| [InteractHoldOngoing](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L94)    | has basic logic for interpolating widget visuals, called every frame for [HoldTimeTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L83)           |
+| InteractHoldTriggered                                                                         | has NO basic logic, override it to provide interaction logic, called after [HoldTimeTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L83)         |
+| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L116)  | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered was never getting called |
+| [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L131) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                           |
 
 We can override them in C++ and Blueprints.  
-*Note:* Do **NOT** forget about calling to parent/super.
+*Note:* Do **NOT** forget to call parent/super to preserve the base class logic.
 
 ***C++***  
 .h
