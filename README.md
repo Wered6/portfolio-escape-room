@@ -180,7 +180,8 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 ```
 
 ***Blueprints***  
-![image](https://github.com/user-attachments/assets/9ae56ca0-2b4b-4082-b8fe-779e59d85b76)
+<img src="https://github.com/user-attachments/assets/9ae56ca0-2b4b-4082-b8fe-779e59d85b76" width="800">  
+<img src="https://github.com/user-attachments/assets/1028a9e1-74c9-4eca-85ca-f4abda771bfb" width="800">
 
 ### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L249))
 
