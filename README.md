@@ -20,6 +20,8 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 
 I implemented a designer-friendly customizable FPP interaction system based on line trace, fully usable in both C++ and Blueprints.
 
+<details>
+
 ![Interact1](https://github.com/user-attachments/assets/770a5737-f053-4986-9b25-15f35b4e0b66)
 ![Interact2](https://github.com/user-attachments/assets/77eefc8d-95aa-45d8-9f51-31de5e766125)
 ![Interact3](https://github.com/user-attachments/assets/dbfd446c-01d0-44d5-a0e0-ca8ef3ca07a4)
@@ -39,7 +41,12 @@ I implemented a designer-friendly customizable FPP interaction system based on l
 
 ## Interact component ([code](Source/EscapeRoom/InteractionSystem/ERInteractComponent.h))
 
-It's easy to add to C++ class or blueprint.  
+It's a component that allows the player to interact. All the necessary logic is encapsulated within it.  
+It's easy to add to C++ class or Blueprint class.
+
+<details>
+<summary>How to use</summary>
+
 ***C++***  
 .h
 
@@ -57,14 +64,18 @@ InteractComponent = CreateDefaultSubobject<UERInteractComponent>(TEXT("InteractC
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/ed71782c-2208-4374-b5a4-bb7e9a327dc1)
 
-It's working after setting IMC and Input Actions.  
+In both scenarios its works after setting up IMC and Input Actions.  
 ![image](https://github.com/user-attachments/assets/dce343fc-4d72-459d-80c9-4657aeb85685)
+
+</details>
 
 ## Enhanced input
 
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
-Press input action has *Pressed* trigger, so it only triggers once.
+<details>
+
+The "Press" input action has a *Pressed* trigger, so it triggers only once.
 
 ![image](https://github.com/user-attachments/assets/eec78740-9d52-469f-b4e0-5092c3d70ddc)
 
@@ -74,31 +85,52 @@ Hold input action has *Hold* trigger and `OneShot` marked, so after `HoldTimeThr
 
 Thanks to this trigger we can visualize it using [Progress circle](#progress-circle-code).
 
+</details>
+
 ## Interactable base classes
 
 I combined interface, component, and inheritance to create three base classes for actors, pawns, and characters. I'm aware it's not a
 perfect solution, mainly due to repetitive code in those classes and the existence of two ways to check if an object is interactable - via
 the base class and via the interface. However, it's the best idea I came up with. Thanks to wrapping the logic into
-the [interactable component](#interactable-component-code
-), repetitive code is reduced, and any modifications can be made directly in the interactable component.
+the [interactable component](#interactable-component-code), repetitive code is reduced, and any modifications can be made directly in the
+interactable component.
 
-We can create interactable object in C++ and in blueprints.  
+<details>
+<summary>How to use</summary>
+
 ***C++***  
 .h
 
 ```cpp
 UCLASS()
-class ESCAPEROOM_API AERKey : public AERInteractableActorBase
+class ESCAPEROOM_API AKey : public AERInteractableActorBase
+
+...
+
+UCLASS()
+class ESCAPEROOM_API AKeypad : public AERInteractablePawnBase
+
+...
+
+UCLASS()
+class ESCAPEROOM_API ANPC : public AERInteractableCharacterBase
 ```
 
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/b1c97b89-6c7d-410a-8277-f43fa91dbb37)
 
+</details>
+
 ## Interactable component ([code](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h))
 
 It's tightly connected with [interact interface](#interact-interface-code). In blueprint you have to select Interact Widget Class. Thanks to
-this component we can easily change properties via C++ or inside blueprint details.  
-***C++***  
+this component we can easily change properties via C++ or inside blueprint details.
+
+<details>
+<summary>How to use</summary>
+
+***C++***
+
 constructor
 
 ```cpp
@@ -116,20 +148,35 @@ InteractableComp->bUseCustomInteractArea = true;
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/2b9d2281-8d45-4e90-9883-88fbc9544998)
 
+In both scenarios you have to set Interact Widget Class.
+
+</details>
+
 ### Outline ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L50))
 
 To outline meshes I used Outline material, which I added to Post Process Volume materials and change `Custom Depth-Stencil Pass` in Project
-Settings to `Enabled with Stencil`
+Settings to `Enabled with Stencil`.  
+To select which mesh should outline we have to add them to array `OutlineMeshComps` (we can add many).
+
+<details>
+<summary>Screens</summary>
+
 ![image](https://github.com/user-attachments/assets/83057750-b73d-4b13-ac54-3cc2dceed0f4)  
 ![image](https://github.com/user-attachments/assets/ffaa3e7c-72c8-4841-8622-336e2f999770)  
 ![image](https://github.com/user-attachments/assets/1ebf220d-6579-487f-a011-a86e9cd3b102)
 
-To select which mesh should outline we have to add them to array `OutlineMeshComps` (we can add many).  
+</details>
+
+
 ***C++***  
 constructor or begin play
 
 ```cpp
 InteractableComp->AddOutlineMeshComponent(KeyMesh);
+
+...
+
+InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 ```
 
 ***Blueprints***  
@@ -254,3 +301,5 @@ Thanks to [this](https://www.youtube.com/watch?v=BgOAbAdi8f0) tutorial I made pr
 to my preferences.
 ![image](https://github.com/user-attachments/assets/7e8476f6-1beb-4437-923a-b571eb0d112d)  
 In case screen is not readable enough - [here](https://blueprintue.com/render/n14dzb06/) is link to bluprintue.
+
+</details>
