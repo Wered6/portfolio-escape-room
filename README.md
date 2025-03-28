@@ -167,6 +167,8 @@ To select which mesh should outline we have to add them to array `OutlineMeshCom
 
 </details>
 
+<details>
+<summary>How to use</summary>
 
 ***C++***  
 constructor or begin play
@@ -183,10 +185,13 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 <img src="https://github.com/user-attachments/assets/9ae56ca0-2b4b-4082-b8fe-779e59d85b76" width="800">  
 <img src="https://github.com/user-attachments/assets/1028a9e1-74c9-4eca-85ca-f4abda771bfb" width="800">
 
+</details>
+
 ### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L249))
 
 By default interact area is whole object. We can adjust that by setting `bUseCustomInteractArea` to `true`. After this we have to add
-collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.  
+collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.
+
 ***C++***  
 .h
 
@@ -203,15 +208,20 @@ InteractBox = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractBox"));
 InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
 ```
 
-***Blueprints***  
-![image](https://github.com/user-attachments/assets/1162e3b6-85ea-4bfa-9d88-35f999d0aa18)  
-![image](https://github.com/user-attachments/assets/2447c27d-534b-4dfe-a0d9-14a003e4e0f2)  
-![image](https://github.com/user-attachments/assets/07495b2e-671a-4708-821e-56e286fe626a)
+***Blueprints***
+
+<img src="https://github.com/user-attachments/assets/1162e3b6-85ea-4bfa-9d88-35f999d0aa18" width="600">
+<img src="https://github.com/user-attachments/assets/2447c27d-534b-4dfe-a0d9-14a003e4e0f2" width="600">
+<img src="https://github.com/user-attachments/assets/07495b2e-671a-4708-821e-56e286fe626a" width="600">
 
 ### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L216))
 
 By default widget is attached to the root of object. We can adjust that by overriding [interact interface](#interact-interface-code)
-function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and retransform widget attachment as we wish.  
+function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and retransform widget attachment as we wish.
+
+<details>
+<summary>How to use</summary>
+
 ***C++***  
 .h
 
@@ -227,17 +237,22 @@ WidgetAttachment = CreateDefaultSubobject<USceneComponent>(TEXT("WidgetAttachmen
 WidgetAttachment->SetupAttachment(KeyMesh);
 ```
 
-***Blueprints***  
-![image](https://github.com/user-attachments/assets/88df66d3-6728-4430-bd24-57718d0f86a9)  
-![image](https://github.com/user-attachments/assets/ab6a6f0a-0e21-425b-a157-cb1b20d7c62b)  
-![image](https://github.com/user-attachments/assets/2db82a32-360b-4012-a116-463b440ac888)
+***Blueprints***
+
+<img src="https://github.com/user-attachments/assets/88df66d3-6728-4430-bd24-57718d0f86a9" width="600">
+<img src="https://github.com/user-attachments/assets/ab6a6f0a-0e21-425b-a157-cb1b20d7c62b" width="600">
+<img src="https://github.com/user-attachments/assets/2db82a32-360b-4012-a116-463b440ac888" width="600">
+
+</details>
 
 ## Interact interface ([code](Source/EscapeRoom/InteractionSystem/ERInteractInterface.h))
 
-There are several functions, but part of them is only meant to be overriden.  
-Part of them has their basic implementation in [interactable component](#interactable-component-code):
+The `Interact interface` is present in all base classes, so we don't have to implement it ourselves.
+There are several functions, but some are only meant to be overridden, while others have their basic implementation
+in [Interactable Component](#interactable-component-code).
 
-***Can be overriden***
+<details>
+<summary>Can be overriden</summary>
 
 | Function                                                                                      | Description                                                                                                                                                                  |
 |-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -253,7 +268,8 @@ Part of them has their basic implementation in [interactable component](#interac
 | [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L131) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                          |
 
 We can override them in C++ and Blueprints.  
-*Note:* Do **NOT** forget about calling to parent/super.  
+*Note:* Do **NOT** forget about calling to parent/super.
+
 ***C++***  
 .h
 
@@ -275,32 +291,47 @@ void AERKey::InteractHoldTriggered_Implementation()
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/71406912-cdd8-495e-8533-5d5bbaf2e8f2)
 
-***Meant only to be called***
+</details>
+
+<details>
+<summary>Meant only to be called</summary>
 
 | Function                                                                                          | Description                                                                                                            |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L146) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L250))   |
 | [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L151)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
-| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L156)            | ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L243))                                            |
-| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L161)           | ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L101))                                            |
+| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L156)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L243))                    |
+| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L161)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L101))                      |
+
+</details>
 
 ## Interact icon widget ([code](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.h))
 
-Widget that is attached to every interactable object. Based on `InteractCategory` and `InteractType` switches icons and
-showing/hiding [progress circle](#progress-circle-code).  
-![image](https://github.com/user-attachments/assets/926617e0-929a-4ee4-9410-863f7832a56c)
-![image](https://github.com/user-attachments/assets/5e9be686-01f7-462d-83ce-8ce98bd0573a)  
-![image](https://github.com/user-attachments/assets/54e41b5d-e39a-420a-9a7e-11e6f2b81b2d)
-![image](https://github.com/user-attachments/assets/0550f40a-ede3-4dd9-8ede-4a3fb1e5cd7f)
+Widget that is attached to every interactable object. Based on `InteractCategory` and `InteractType` it switches icons and
+shows/hides [progress circle](#progress-circle-code) accordingly.  
+We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L81)
+function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L203).
 
-We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L81) function.
+<details>
+<summary>Screens</summary>
+
+<div><img src="https://github.com/user-attachments/assets/926617e0-929a-4ee4-9410-863f7832a56c" width="150">
+<img src="https://github.com/user-attachments/assets/5e9be686-01f7-462d-83ce-8ce98bd0573a" width="700"></div> 
+<div><img src="https://github.com/user-attachments/assets/54e41b5d-e39a-420a-9a7e-11e6f2b81b2d" width="150">
+<img src="https://github.com/user-attachments/assets/0550f40a-ede3-4dd9-8ede-4a3fb1e5cd7f" width="700"></div>
+
+</details>
 
 ## Progress circle ([code](Source/EscapeRoom/InteractionSystem/ERProgressCircle.h))
+
+<details>
 
 ![image](https://github.com/user-attachments/assets/08de9d83-2dc7-413e-84c0-19057ccffb4a)  
 Thanks to [this](https://www.youtube.com/watch?v=BgOAbAdi8f0) tutorial I made progress circle material and then widget with some adjustment
 to my preferences.
 ![image](https://github.com/user-attachments/assets/7e8476f6-1beb-4437-923a-b571eb0d112d)  
 In case screen is not readable enough - [here](https://blueprintue.com/render/n14dzb06/) is link to bluprintue.
+
+</details>
 
 </details>
