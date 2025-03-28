@@ -78,6 +78,7 @@ In both scenarios its works after setting up IMC and Input Actions.
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
 <details>
+<summary>More</summary>
 
 The "Press" input action has a *Pressed* trigger, so it triggers only once.
 
@@ -334,6 +335,7 @@ function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.c
 ## Progress circle ([code](Source/EscapeRoom/InteractionSystem/ERProgressCircle.h))
 
 <details>
+<summary>More</summary>
 
 ![image](https://github.com/user-attachments/assets/08de9d83-2dc7-413e-84c0-19057ccffb4a)  
 Thanks to [this](https://www.youtube.com/watch?v=BgOAbAdi8f0) tutorial I made progress circle material and then widget with some adjustment
