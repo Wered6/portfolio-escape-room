@@ -21,6 +21,7 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 I implemented a designer-friendly customizable FPP interaction system based on line trace, fully usable in both C++ and Blueprints.
 
 <details>
+<summary>More</summary>
 
 ![Interact1](https://github.com/user-attachments/assets/770a5737-f053-4986-9b25-15f35b4e0b66)
 ![Interact2](https://github.com/user-attachments/assets/77eefc8d-95aa-45d8-9f51-31de5e766125)
@@ -77,7 +78,6 @@ In both scenarios its works after setting up IMC and Input Actions.
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
 <details>
-<summary>Details</summary>
 
 The "Press" input action has a *Pressed* trigger, so it triggers only once.
 
