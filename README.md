@@ -26,7 +26,7 @@ I implemented a designer-friendly customizable FPP interaction system based on l
 ![Interact2](https://github.com/user-attachments/assets/77eefc8d-95aa-45d8-9f51-31de5e766125)
 ![Interact3](https://github.com/user-attachments/assets/dbfd446c-01d0-44d5-a0e0-ca8ef3ca07a4)
 
-## Implementations
+# Implementations
 
 - [**Interact component**](#interact-component-code) ([code](Source/EscapeRoom/InteractionSystem/ERInteractComponent.h))
     - [Enhanced input](#enhanced-input)
@@ -35,11 +35,14 @@ I implemented a designer-friendly customizable FPP interaction system based on l
   character [code](Source/EscapeRoom/InteractionSystem/ERInteractableCharacterBase.h)) - their implementations are basically the same thanks
   to wrapping logic into component
     - [Interactable component](#interactable-component-code) ([code](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h))
+        - [Outline](#outline-logic)
+        - [Interact area](#interact-area-logic)
+        - [Widget attachment](#widget-attachment-logic)
     - [Interact interface](#interact-interface-code) ([code](Source/EscapeRoom/InteractionSystem/ERInteractInterface.h))
 - [**Interact icon widget**](#interact-icon-widget-code) ([code](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.h))
     - [Progress circle](#progress-circle-code)
 
-## Interact component ([code](Source/EscapeRoom/InteractionSystem/ERInteractComponent.h))
+# Interact component ([code](Source/EscapeRoom/InteractionSystem/ERInteractComponent.h))
 
 It's a component that allows the player to interact. All the necessary logic is encapsulated within it.  
 It's easy to add to C++ class or Blueprint class.
@@ -69,7 +72,7 @@ In both scenarios its works after setting up IMC and Input Actions.
 
 </details>
 
-### Enhanced input
+## Enhanced input
 
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
@@ -87,7 +90,7 @@ Thanks to this trigger we can visualize it using [Progress circle](#progress-cir
 
 </details>
 
-## Interactable base classes
+# Interactable base classes
 
 I combined interface, component, and inheritance to create three base classes for actors, pawns, and characters. I'm aware it's not a
 perfect solution, mainly due to repetitive code in those classes and the existence of two ways to check if an object is interactable - via
@@ -310,7 +313,7 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 </details>
 
-## Interact icon widget ([code](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.h))
+# Interact icon widget ([code](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.h))
 
 Widget that is attached to every interactable object. Based on `InteractCategory` and `InteractType` it switches icons and
 shows/hides [progress circle](#progress-circle-code) accordingly.  
