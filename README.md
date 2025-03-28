@@ -192,6 +192,9 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 By default interact area is whole object. We can adjust that by setting `bUseCustomInteractArea` to `true`. After this we have to add
 collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.
 
+<details>
+<summary>How to use</summary>
+
 ***C++***  
 .h
 
@@ -213,6 +216,8 @@ InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
 <img src="https://github.com/user-attachments/assets/1162e3b6-85ea-4bfa-9d88-35f999d0aa18" width="600">
 <img src="https://github.com/user-attachments/assets/2447c27d-534b-4dfe-a0d9-14a003e4e0f2" width="600">
 <img src="https://github.com/user-attachments/assets/07495b2e-671a-4708-821e-56e286fe626a" width="600">
+
+</details>
 
 ### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L216))
 
