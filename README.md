@@ -69,7 +69,7 @@ In both scenarios its works after setting up IMC and Input Actions.
 
 </details>
 
-## Enhanced input
+### Enhanced input
 
 I made this system with enhanced input system's capabilities in mind. So there are two types of interaction: press and hold.
 
