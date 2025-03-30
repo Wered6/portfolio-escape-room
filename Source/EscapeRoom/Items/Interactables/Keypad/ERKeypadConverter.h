@@ -20,7 +20,7 @@ protected:
 	virtual void BeginPlay() override;
 
 protected:
-	virtual void ButtonPressed() override;
+	virtual void ButtonPressHandle_Implementation(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName) override;
 
 private:
 	void Convert();

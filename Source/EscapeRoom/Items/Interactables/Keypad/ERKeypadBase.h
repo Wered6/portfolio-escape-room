@@ -17,16 +17,7 @@ class URectLightComponent;
 UENUM(BlueprintType)
 enum class EKeypadButtonName : uint8
 {
-	Zero,
-	One,
-	Two,
-	Three,
-	Four,
-	Five,
-	Six,
-	Seven,
-	Eight,
-	Nine,
+	Digit,
 	DEL,
 	OK
 };
@@ -37,7 +28,7 @@ struct FKeypadButton
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category="ER|Keypad|Button")
-	TObjectPtr<UStaticMeshComponent> Mesh;
+	UStaticMeshComponent* Mesh{};
 	UPROPERTY(VisibleAnywhere, Category="ER|Keypad|Button")
 	uint8 Value{};
 	UPROPERTY(VisibleAnywhere, Category="ER|Keypad|Button")
@@ -76,7 +67,6 @@ enum class ELedColor : uint8
 
 // TODO make it multicast
 DECLARE_DELEGATE(FOnFinishProcessing)
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnKeypadButtonPressed, EKeypadButtonName, uint8)
 
 UCLASS()
 class ESCAPEROOM_API AERKeypadBase : public AERInteractablePawnBase
@@ -108,15 +98,12 @@ protected:
 	bool bCanNavigate{true};
 	bool bCanPressButton{true};
 	bool bProcessing{true};
-	UPROPERTY(BlueprintReadOnly, Category="ER|Keypad|Button")
-	FKeypadButton SelectedButton;
 
 	UPROPERTY(EditAnywhere, Category="ER|Keypad|Leds")
 	float LedShortFlashTime{0.1f};
 	UPROPERTY(EditAnywhere, Category="ER|Keypad|Leds")
 	float LedLongFlashTime{1.f};
 
-	FOnKeypadButtonPressed OnKeypadButtonPressed;
 	FOnFinishProcessing OnFinishProcessing;
 
 private:
@@ -130,12 +117,15 @@ private:
 	void StartProcessing();
 	void LedBlinking();
 
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess=true), Category="ER|Keypad|Button")
+	FKeypadButton SelectedButton;
+
 	int8 Button2DArrayXIndex{2};
 	int8 Button2DArrayYIndex{3};
 
-	UPROPERTY(VisibleAnywhere, Category="ER|Keypad|Leds")
+	UPROPERTY()
 	TObjectPtr<UMaterialInstanceDynamic> GreenLedDynMat;
-	UPROPERTY(VisibleAnywhere, Category="ER|Keypad|Leds")
+	UPROPERTY()
 	TObjectPtr<UMaterialInstanceDynamic> RedLedDynMat;
 	FTimerHandle GreenLedEmiTimerHandle;
 	FTimerHandle RedLedEmiTimerHandle;
@@ -187,14 +177,17 @@ public:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 protected:
+	UFUNCTION(BlueprintNativeEvent, Category="ER|Keypad|Input")
+	void ButtonPressHandle(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName);
+
 	/**
 	* Bind to NavigateAction
 	*/
-	virtual void Navigate(const FInputActionValue& Value);
+	void Navigate(const FInputActionValue& Value);
 	/**
 	 * Bind to ButtonAction
 	 */
-	virtual void ButtonPressed();
+	void ButtonPressed();
 	/**
 	 * Bind to ButtonAction
 	 */

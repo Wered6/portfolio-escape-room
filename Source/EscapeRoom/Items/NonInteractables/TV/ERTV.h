@@ -118,4 +118,17 @@ private:
 	TObjectPtr<UMediaSoundComponent> TVSound;
 
 #pragma endregion
+
+	//CDPR
+#pragma region CardinalBird
+
+public:
+	void OpenCardinalBirdVideo();
+	void OpenHangman();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="ER|TV|Media")
+	TObjectPtr<UFileMediaSource> CardinalBirdMediaSource;
+
+#pragma endregion
 };

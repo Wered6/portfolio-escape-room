@@ -19,8 +19,10 @@ void AERKeypadConverter::BeginPlay()
 	OnFinishProcessing.BindUObject(this, &AERKeypadConverter::Convert);
 }
 
-void AERKeypadConverter::ButtonPressed()
+void AERKeypadConverter::ButtonPressHandle_Implementation(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName)
 {
+	Super::ButtonPressHandle_Implementation(ButtonMesh, ButtonValue, ButtonName);
+
 #pragma region Nullchecks
 	if (!TV)
 	{
@@ -29,22 +31,20 @@ void AERKeypadConverter::ButtonPressed()
 	}
 #pragma endregion
 
-	if (SelectedButton.Name == EKeypadButtonName::OK)
+	switch (ButtonName)
 	{
+	case EKeypadButtonName::Digit:
+		TV->SendNumberToConverter(ButtonValue);
+		break;
+	case EKeypadButtonName::DEL:
+		break;
+	case EKeypadButtonName::OK:
 		if (!TV->NextRGBField())
 		{
 			bProcessing = true;
 		}
+		break;
 	}
-	else if (SelectedButton.Name == EKeypadButtonName::DEL)
-	{
-	}
-	else
-	{
-		TV->SendNumberToConverter(SelectedButton.Value);
-	}
-
-	Super::ButtonPressed();
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst

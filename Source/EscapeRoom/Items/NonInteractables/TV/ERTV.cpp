@@ -92,11 +92,14 @@ void AERTV::BeginPlay()
 	HangmanWidget->Password = Password;
 
 	TVSound->SetMediaPlayer(TVMediaPlayer);
-	// Uncomment after debugging
-	OpenIntro1();
+	// OpenIntro1();
+	// CDPR
+	TVMediaPlayer->SetLooping(true);
+	TVMediaPlayer->OpenSource(NoSignalMediaSource);
 
-	Flashlight->OnFlashlightEquipped.BindUObject(this, &AERTV::OpenStage1);
-	Keypad->OnCorrectPassword.BindUObject(this, &AERTV::OpenStage2);
+	//CDPR
+	// Flashlight->OnFlashlightEquipped.BindUObject(this, &AERTV::OpenStage1);
+	// Keypad->OnCorrectPassword.BindUObject(this, &AERTV::OpenStage2);
 }
 
 void AERTV::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -111,6 +114,7 @@ void AERTV::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	}
 #pragma endregion
 
+	TVMediaPlayer->OpenSource(NoSignalMediaSource);
 	TVMediaPlayer->SetLooping(false);
 }
 
@@ -384,9 +388,70 @@ void AERTV::OpenToBeContinued()
 		UE_LOG(LogTemp, Warning, TEXT("%s|ToBeContinuedMediaSource is nullptr"), *FString(__FUNCTION__))
 		return;
 	}
+	if (!ScreenDynMat)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|ScreenDynMat is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
 #pragma endregion
 
 	ScreenDynMat->SetTextureParameterValue(FName("Texture"), TVMediaTexture);
 
 	TVMediaPlayer->OpenSource(ToBeContinuedMediaSource);
+}
+
+void AERTV::OpenCardinalBirdVideo()
+{
+#pragma region Nullchecks
+	if (!TVMediaPlayer)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|TVMediaPlayer is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+	if (!CardinalBirdMediaSource)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|CardinalBirdMediaSource is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+	if (!ScreenDynMat)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|ScreenDynMat is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+#pragma endregion
+
+	ScreenDynMat->SetTextureParameterValue(FName("Texture"), TVMediaTexture);
+
+	TVMediaPlayer->SetLooping(false);
+	TVMediaPlayer->OpenSource(CardinalBirdMediaSource);
+}
+
+void AERTV::OpenHangman()
+{
+#pragma region Nullchecks
+	if (!TVMediaPlayer)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|TVMediaPlayer is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+	if (!ScreenDynMat)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|DynamicMaterial is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+	if (!HangmanWidgetComp)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|HangmanWidgetComp is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+	if (!HangmanWidgetComp->GetRenderTarget())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|HangmanWidgetComp->GetRenderTarget() is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+#pragma endregion
+
+	TVMediaPlayer->Seek(TVMediaPlayer->GetDuration());
+
+	ScreenDynMat->SetTextureParameterValue(FName("Texture"), HangmanWidgetComp->GetRenderTarget());
 }

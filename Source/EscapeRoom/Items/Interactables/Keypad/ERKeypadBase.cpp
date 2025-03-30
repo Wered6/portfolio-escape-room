@@ -283,15 +283,23 @@ void AERKeypadBase::LedFlash(const ELedColor LedColor, float FlashTime)
 
 void AERKeypadBase::PopulateButton2DArray()
 {
-	FKeypadButton Button1{Button1Mesh, 1, EKeypadButtonName::One}, Button2{Button2Mesh, 2, EKeypadButtonName::Two}, Button3{Button3Mesh, 3, EKeypadButtonName::Three};
-	FKeypadButton Button4{Button4Mesh, 4, EKeypadButtonName::Four}, Button5{Button5Mesh, 5, EKeypadButtonName::Five}, Button6{Button6Mesh, 6, EKeypadButtonName::Six};
-	FKeypadButton Button7{Button7Mesh, 7, EKeypadButtonName::Seven}, Button8{Button8Mesh, 8, EKeypadButtonName::Eight}, Button9{Button9Mesh, 9, EKeypadButtonName::Nine};
-	FKeypadButton ButtonDEL{ButtonDELMesh, 10, EKeypadButtonName::DEL}, Button0{Button0Mesh, 0, EKeypadButtonName::Zero}, ButtonOK{ButtonOKMesh, 20, EKeypadButtonName::OK};
+	const FKeypadButton Button1{Button1Mesh, 1, EKeypadButtonName::Digit};
+	const FKeypadButton Button2{Button2Mesh, 2, EKeypadButtonName::Digit};
+	const FKeypadButton Button3{Button3Mesh, 3, EKeypadButtonName::Digit};
+	const FKeypadButton Button4{Button4Mesh, 4, EKeypadButtonName::Digit};
+	const FKeypadButton Button5{Button5Mesh, 5, EKeypadButtonName::Digit};
+	const FKeypadButton Button6{Button6Mesh, 6, EKeypadButtonName::Digit};
+	const FKeypadButton Button7{Button7Mesh, 7, EKeypadButtonName::Digit};
+	const FKeypadButton Button8{Button8Mesh, 8, EKeypadButtonName::Digit};
+	const FKeypadButton Button9{Button9Mesh, 9, EKeypadButtonName::Digit};
+	const FKeypadButton ButtonDEL{ButtonDELMesh, 10, EKeypadButtonName::DEL};
+	const FKeypadButton Button0{Button0Mesh, 0, EKeypadButtonName::Digit};
+	const FKeypadButton ButtonOK{ButtonOKMesh, 20, EKeypadButtonName::OK};
 
-	FKeypadButtonArray FirstRowButtons{Button1, Button2, Button3};
-	FKeypadButtonArray SecondRowButtons{Button4, Button5, Button6};
-	FKeypadButtonArray ThirdRowButtons{Button7, Button8, Button9};
-	FKeypadButtonArray FourthRowButtons{ButtonDEL, Button0, ButtonOK};
+	const FKeypadButtonArray FirstRowButtons{Button1, Button2, Button3};
+	const FKeypadButtonArray SecondRowButtons{Button4, Button5, Button6};
+	const FKeypadButtonArray ThirdRowButtons{Button7, Button8, Button9};
+	const FKeypadButtonArray FourthRowButtons{ButtonDEL, Button0, ButtonOK};
 
 	Button2DArray.Add(FirstRowButtons);
 	Button2DArray.Add(SecondRowButtons);
@@ -402,6 +410,44 @@ void AERKeypadBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	EnhancedInputComponent->BindAction(ExitAction, ETriggerEvent::Triggered, this, &AERKeypadBase::Exit);
 }
 
+void AERKeypadBase::ButtonPressHandle_Implementation(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName)
+{
+	// TODO think about not blocking movement and pressing but maybe just dont do logic and flash and long sound on red led to show error
+	if (!bCanPressButton)
+	{
+		return;
+	}
+
+	bCanNavigate = false;
+	bCanPressButton = false;
+
+	switch (ButtonName)
+	{
+	case EKeypadButtonName::Digit:
+		LedFlash(ELedColor::Green, LedShortFlashTime);
+		break;
+	case EKeypadButtonName::DEL:
+		LedFlash(ELedColor::Red, LedShortFlashTime);
+		break;
+	case EKeypadButtonName::OK:
+		if (bProcessing)
+		{
+			StartProcessing();
+		}
+		else
+		{
+			LedFlash(ELedColor::Green, LedShortFlashTime);
+		}
+		break;
+	}
+
+	PlayButtonAnimation();
+
+	UE_LOG(LogTemp, Warning, TEXT("KeypadButtonPressed"))
+	// TODO add sound for clicking
+	// TODO add think about delegates for number DEL and OK
+}
+
 void AERKeypadBase::Navigate(const FInputActionValue& Value)
 {
 	if (!bCanNavigate)
@@ -437,43 +483,7 @@ void AERKeypadBase::Navigate(const FInputActionValue& Value)
 
 void AERKeypadBase::ButtonPressed()
 {
-	// TODO think about not blocking movement and pressing but maybe just dont do logic and flash and long sound on red led to show error
-	if (!bCanPressButton)
-	{
-		return;
-	}
-
-	bCanNavigate = false;
-	bCanPressButton = false;
-
-	OnKeypadButtonPressed.Broadcast(SelectedButton.Name, SelectedButton.Value);
-
-	if (SelectedButton.Name == EKeypadButtonName::OK)
-	{
-		if (bProcessing)
-		{
-			StartProcessing();
-		}
-		else
-		{
-			LedFlash(ELedColor::Green, LedShortFlashTime);
-		}
-	}
-	else if (SelectedButton.Name == EKeypadButtonName::DEL)
-	{
-		LedFlash(ELedColor::Red, LedShortFlashTime);
-	}
-	// Other buttons (0-9)
-	else
-	{
-		LedFlash(ELedColor::Green, LedShortFlashTime);
-	}
-
-	PlayButtonAnimation();
-
-	UE_LOG(LogTemp, Warning, TEXT("KeypadAcceptButtonPressed"))
-	// TODO add sound for clicking
-	// TODO add think about delegates for number DEL and OK
+	ButtonPressHandle(SelectedButton.Mesh, SelectedButton.Value, SelectedButton.Name);
 }
 
 void AERKeypadBase::ButtonReleased()

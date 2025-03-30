@@ -17,26 +17,25 @@ void AERKeypadPassword::BeginPlay()
 	OnFinishProcessing.BindUObject(this, &AERKeypadPassword::CheckPassword);
 }
 
-void AERKeypadPassword::ButtonPressed()
+void AERKeypadPassword::ButtonPressHandle_Implementation(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName)
 {
-	Super::ButtonPressed();
+	Super::ButtonPressHandle_Implementation(ButtonMesh, ButtonValue, ButtonName);
 
-	if (SelectedButton.Name == EKeypadButtonName::OK)
+	switch (ButtonName)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("UserPassword: %s"), *UserPassword)
-		// In parent here is OnFinishProcessing, if you want to do something after OK, bind to OnFinishProcessing
-	}
-	else if (SelectedButton.Name == EKeypadButtonName::DEL)
-	{
+	case EKeypadButtonName::Digit:
+		UserPassword = UserPassword + FString::FromInt(ButtonValue);
+		break;
+	case EKeypadButtonName::DEL:
 		if (!UserPassword.IsEmpty())
 		{
 			UserPassword = UserPassword.LeftChop(1);
 		}
-	}
-	// Other buttons (0-9)
-	else
-	{
-		UserPassword = UserPassword + FString::FromInt(SelectedButton.Value);
+		break;
+	case EKeypadButtonName::OK:
+		UE_LOG(LogTemp, Warning, TEXT("UserPassword: %s"), *UserPassword)
+	// In parent here is OnFinishProcessing, if you want to do something after OK, bind to OnFinishProcessing
+		break;
 	}
 }
 

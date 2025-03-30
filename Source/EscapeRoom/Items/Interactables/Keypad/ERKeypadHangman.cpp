@@ -36,28 +36,28 @@ void AERKeypadHangman::SendSignPasswordToTV()
 	LedFlash(CorrectSign ? ELedColor::Green : ELedColor::Red, LedLongFlashTime);
 }
 
-void AERKeypadHangman::ButtonPressed()
+void AERKeypadHangman::ButtonPressHandle_Implementation(const UStaticMeshComponent* ButtonMesh, const uint8 ButtonValue, const EKeypadButtonName ButtonName)
 {
-	Super::ButtonPressed();
+	Super::ButtonPressHandle_Implementation(ButtonMesh, ButtonValue, ButtonName);
 
-	if (SelectedButton.Name == EKeypadButtonName::OK)
+	switch (ButtonName)
 	{
+	case EKeypadButtonName::Digit:
+		Sign <<= 1;
+		Sign |= ButtonValue;
+		break;
+	case EKeypadButtonName::DEL:
+		Sign >>= 1;
+		break;
+	case EKeypadButtonName::OK:
+		// TODO make it case-insensitive
 		// Limit between a-z A-Z
 		if (Sign < 65 || (Sign > 90 && Sign < 96) || Sign > 122)
 		{
 			// 0b00111111 = '?' sign
 			Sign = 0b00111111;
 		}
-	}
-	else if (SelectedButton.Name == EKeypadButtonName::DEL)
-	{
-		Sign >>= 1;
-	}
-	// Other buttons (0-9)
-	else
-	{
-		Sign <<= 1;
-		Sign |= SelectedButton.Value;
+		break;
 	}
 }
 
