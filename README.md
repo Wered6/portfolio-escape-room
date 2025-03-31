@@ -23,6 +23,10 @@ I implemented a designer-friendly customizable FPP interaction system based on l
 <details>
 <summary>More</summary>
 
+# Video
+
+[![Watch the video](https://img.youtube.com/vi/LXiYMMlcryQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=LXiYMMlcryQ)
+
 ![Interact1](https://github.com/user-attachments/assets/770a5737-f053-4986-9b25-15f35b4e0b66)
 ![Interact2](https://github.com/user-attachments/assets/77eefc8d-95aa-45d8-9f51-31de5e766125)
 ![Interact3](https://github.com/user-attachments/assets/dbfd446c-01d0-44d5-a0e0-ca8ef3ca07a4)
