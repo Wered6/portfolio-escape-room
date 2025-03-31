@@ -43,7 +43,7 @@ public:
 	void ResetConverter() const;
 
 private:
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void StartAlarmClock();
 
 	UFUNCTION()
@@ -114,7 +114,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="ER|TV|Media|TBC")
 	TObjectPtr<UFileMediaSource> ToBeContinuedMediaSource;
 
-	UPROPERTY(EditDefaultsOnly, Category="ER|TV|Media|Sound")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess=true), Category="ER|TV|Media|Sound")
 	TObjectPtr<UMediaSoundComponent> TVSound;
 
 #pragma endregion

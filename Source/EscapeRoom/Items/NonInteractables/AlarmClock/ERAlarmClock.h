@@ -27,6 +27,9 @@ public:
 	void StartClock();
 
 private:
+	UPROPERTY()
+	TObjectPtr<UMaterialInstanceDynamic> DynamicMaterial;
+
 	UPROPERTY(EditAnywhere, Category="ER|AlarmClock|Time")
 	uint8 Minutes{};
 	UPROPERTY(EditAnywhere, Category="ER|AlarmClock|Time")

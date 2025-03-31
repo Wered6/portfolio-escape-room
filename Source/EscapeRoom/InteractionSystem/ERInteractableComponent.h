@@ -71,6 +71,9 @@ public:
 
 	UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="1", ClampMin="0", ClampMax="1", EditCondition="InteractType==EERInteractType::Hold"), Category="ER|Interact")
 	float MinimalIconOpacity{0.3f};
+	/**
+	 * Minimal opacity of foreground circle.
+	 */
 	UPROPERTY(EditAnywhere, meta=(UIMin="0", UIMax="1", ClampMin="0", ClampMax="1", EditCondition="InteractType==EERInteractType::Hold"), Category="ER|Interact")
 	float MinimalProgressCircleOpacity{};
 	UPROPERTY(EditAnywhere, meta=(EditCondition="InteractType==EERInteractType::Hold"), Category="ER|Interact")
@@ -83,7 +86,7 @@ public:
 	float HoldTimeThreshold{};
 
 	UPROPERTY(EditAnywhere, Category="ER|Interact")
-	bool bCanInteract{};
+	bool bCanInteract{true};
 	/**
 	 * Determines whether a custom interaction area is used for this interactable object.
 	 * If true, add collision with preset "InteractArea".

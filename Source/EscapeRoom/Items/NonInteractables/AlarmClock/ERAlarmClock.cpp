@@ -37,6 +37,8 @@ void AERAlarmClock::BeginPlay()
 
 	AlarmClockScreenWidget->MinutesInit = Minutes;
 	AlarmClockScreenWidget->SecondsInit = Seconds;
+
+	DynamicMaterial = RootMesh->CreateDynamicMaterialInstance(0);
 }
 
 void AERAlarmClock::Tick(float DeltaSeconds)
@@ -70,8 +72,6 @@ void AERAlarmClock::Tick(float DeltaSeconds)
 
 void AERAlarmClock::StartClock()
 {
-	UMaterialInstanceDynamic* DynamicMaterial{RootMesh->CreateDynamicMaterialInstance(0)};
-
 #pragma region Nullchecks
 	if (!DynamicMaterial)
 	{
@@ -93,4 +93,5 @@ void AERAlarmClock::StartClock()
 	DynamicMaterial->SetTextureParameterValue(FName("Texture"), AlarmClockWidgetComp->GetRenderTarget());
 
 	bStartTimer = true;
+	UE_LOG(LogTemp, Warning, TEXT("started"))
 }

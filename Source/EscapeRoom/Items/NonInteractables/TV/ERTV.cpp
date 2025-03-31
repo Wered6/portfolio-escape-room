@@ -452,6 +452,7 @@ void AERTV::OpenHangman()
 #pragma endregion
 
 	TVMediaPlayer->Seek(TVMediaPlayer->GetDuration());
+	TVMediaPlayer->SetLooping(false);
 
 	ScreenDynMat->SetTextureParameterValue(FName("Texture"), HangmanWidgetComp->GetRenderTarget());
 }
