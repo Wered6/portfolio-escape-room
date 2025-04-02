@@ -2,8 +2,8 @@
 
 
 #include "ERDoor.h"
-#include "EscapeRoom/Components/ERLockComponent.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
+#include "EscapeRoom/LockKeySystem/ERLockComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 

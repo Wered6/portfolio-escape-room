@@ -2,7 +2,7 @@
 
 
 #include "ERCabinetDoor.h"
-#include "EscapeRoom/Components/ERLockComponent.h"
+#include "EscapeRoom/LockKeySystem/ERLockComponent.h"
 
 
 AERCabinetDoor::AERCabinetDoor()

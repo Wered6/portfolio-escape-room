@@ -2,7 +2,7 @@
 
 
 #include "ERKeypadPassword.h"
-#include "EscapeRoom/Components/ERKeyComponent.h"
+#include "EscapeRoom/LockKeySystem/ERKeyComponent.h"
 
 
 AERKeypadPassword::AERKeypadPassword()

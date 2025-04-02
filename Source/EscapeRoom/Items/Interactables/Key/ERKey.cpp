@@ -2,8 +2,8 @@
 
 
 #include "ERKey.h"
-#include "EscapeRoom/Components/ERKeyComponent.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
+#include "EscapeRoom/LockKeySystem/ERKeyComponent.h"
 
 
 AERKey::AERKey()
