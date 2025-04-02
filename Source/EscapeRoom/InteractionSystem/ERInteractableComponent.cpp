@@ -105,7 +105,7 @@ void UERInteractableComponent::InteractHoldOngoing(const float ElapsedSeconds)
 	InteractWidget->SetIconOpacity(ProgressFraction);
 	InteractWidget->SetProgressCircleOpacity(ProgressFraction);
 	InteractWidget->SetProgressCirclePercent(ProgressFraction);
-	UE_LOG(LogTemp, Warning, TEXT("HoldOngoing"))
+	UE_LOG(LogTemp, Warning, TEXT("HoldOngoing, ElapsedSeconds: %f"), ElapsedSeconds)
 }
 
 void UERInteractableComponent::InteractHoldTriggered()
