@@ -38,14 +38,14 @@ void UERInteractableComponent::SetOutlineMeshComponents(const TArray<UMeshCompon
 void UERInteractableComponent::DisplayInteractionUI(const bool bShowInteract)
 {
 #pragma region Nullchecks
-	if (!InteractWidgetComp)
+	if (!InteractWidget)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidgetComp is nullptr"), *FString(__FUNCTION__))
+		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
 		return;
 	}
 #pragma endregion
 
-	InteractWidgetComp->SetVisibility(bShowInteract);
+	InteractWidget->SetVisibility(bShowInteract ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 
 	for (UMeshComponent* OutlineMeshComponent : OutlineMeshComps)
 	{
@@ -85,7 +85,6 @@ float UERInteractableComponent::InteractHoldStarted(AActor* OtherInstigator)
 #pragma endregion
 
 	InteractInstigator = OtherInstigator;
-	InteractWidget->SetIsHolding(true);
 	UE_LOG(LogTemp, Warning, TEXT("HoldStarted"))
 
 	return HoldTimeThreshold;
@@ -105,7 +104,6 @@ void UERInteractableComponent::InteractHoldOngoing(const float ElapsedSeconds)
 	InteractWidget->SetIconOpacity(ProgressFraction);
 	InteractWidget->SetProgressCircleOpacity(ProgressFraction);
 	InteractWidget->SetProgressCirclePercent(ProgressFraction);
-	UE_LOG(LogTemp, Warning, TEXT("HoldOngoing, ElapsedSeconds: %f"), ElapsedSeconds)
 }
 
 void UERInteractableComponent::InteractHoldTriggered()
@@ -124,7 +122,9 @@ void UERInteractableComponent::InteractHoldCanceled()
 #pragma endregion
 
 	InteractInstigator = nullptr;
-	InteractWidget->SetIsHolding(false);
+	InteractWidget->SetProgressCircleOpacity(0.f);
+	InteractWidget->SetProgressCirclePercent(0.f);
+	InteractWidget->SetIconOpacity(0.f);
 	UE_LOG(LogTemp, Warning, TEXT("HoldCanceled"))
 }
 
@@ -139,7 +139,6 @@ void UERInteractableComponent::InteractHoldCompleted()
 #pragma endregion
 
 	InteractInstigator = nullptr;
-	InteractWidget->SetIsHolding(false);
 	UE_LOG(LogTemp, Warning, TEXT("HoldCompleted"))
 }
 
@@ -161,6 +160,19 @@ bool UERInteractableComponent::GetCanInteract() const
 EERInteractType UERInteractableComponent::GetInteractType() const
 {
 	return InteractType;
+}
+
+void UERInteractableComponent::SetInteractCategory(const EERInteractCategory InInteractCategory)
+{
+#pragma region Nullchecks
+	if (!InteractWidget)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
+		return;
+	}
+#pragma endregion
+
+	InteractWidget->SetInteractCategory(InInteractCategory);
 }
 
 void UERInteractableComponent::OnRegister()
@@ -206,9 +218,9 @@ void UERInteractableComponent::InitializeInteractWidget()
 	                     IconSize,
 	                     MinimalProgressCircleOpacity,
 	                     ProgressCircleSize);
+	InteractWidget->SetVisibility(ESlateVisibility::Hidden);
 	InteractWidgetComp->SetWidgetSpace(EWidgetSpace::Screen);
 	InteractWidgetComp->SetDrawAtDesiredSize(true);
-	InteractWidgetComp->SetVisibility(false);
 	InteractWidgetComp->SetWidget(InteractWidget);
 	InteractWidgetComp->RegisterComponent();
 }

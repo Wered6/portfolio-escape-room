@@ -6,7 +6,7 @@
 #include "EscapeRoom/InteractionSystem/ERInteractableActorBase.h"
 #include "ERKey.generated.h"
 
-class UERKeyComponent;
+class UERUnlockerComponent;
 
 UCLASS()
 class ESCAPEROOM_API AERKey : public AERInteractableActorBase
@@ -23,7 +23,7 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UERKeyComponent> KeyComponent;
+	TObjectPtr<UERUnlockerComponent> UnlockerComponent;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> KeyMesh;

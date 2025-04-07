@@ -15,7 +15,7 @@
 #include "EscapeRoom/Items/Interactables/Flashlight/ERFlashlight.h"
 #include "EscapeRoom/Items/Interactables/Keypad/ERKeypadPassword.h"
 #include "EscapeRoom/Items/NonInteractables/AlarmClock/ERAlarmClock.h"
-#include "EscapeRoom/LockKeySystem/ERKeyComponent.h"
+#include "EscapeRoom/LockSystem/ERUnlockerComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Runtime/MediaAssets/Public/MediaSoundComponent.h"
@@ -49,7 +49,7 @@ AERTV::AERTV()
 	AttenuationSettings.FalloffDistance = 400.f;
 	TVSound->AttenuationOverrides = AttenuationSettings;
 
-	KeyComponent = CreateDefaultSubobject<UERKeyComponent>(TEXT("KeyComponent"));
+	UnlockerComponent = CreateDefaultSubobject<UERUnlockerComponent>(TEXT("UnlockerComponent"));
 }
 
 void AERTV::BeginPlay()
@@ -126,7 +126,7 @@ bool AERTV::EnterSignToHangman(const FString& Sign) const
 		UE_LOG(LogTemp, Warning, TEXT("%s|TVScreenWidget is nullptr"), *FString(__FUNCTION__))
 		return false;
 	}
-	if (!KeyComponent)
+	if (!UnlockerComponent)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%s|KeyComponent is nullptr"), *FString(__FUNCTION__))
 		return false;
@@ -136,7 +136,7 @@ bool AERTV::EnterSignToHangman(const FString& Sign) const
 	const bool CorrectSign{HangmanWidget->EnterSignToPassword(Sign)};
 	if (HangmanWidget->Password == HangmanWidget->UserPassword)
 	{
-		KeyComponent->UnlockLockedItems();
+		UnlockerComponent->UnlockItems();
 		if (OnCorrectHangmanPassword.IsBound())
 		{
 			OnCorrectHangmanPassword.Execute();

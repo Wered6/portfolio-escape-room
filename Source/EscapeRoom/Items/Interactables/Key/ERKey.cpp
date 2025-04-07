@@ -3,7 +3,7 @@
 
 #include "ERKey.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
-#include "EscapeRoom/LockKeySystem/ERKeyComponent.h"
+#include "EscapeRoom/LockSystem/ERUnlockerComponent.h"
 
 
 AERKey::AERKey()
@@ -14,7 +14,7 @@ AERKey::AERKey()
 	KeyMesh->SetCollisionProfileName(TEXT("NoCollision"));
 	SetRootComponent(KeyMesh);
 
-	KeyComponent = CreateDefaultSubobject<UERKeyComponent>(TEXT("KeyComponent"));
+	UnlockerComponent = CreateDefaultSubobject<UERUnlockerComponent>(TEXT("UnlockerComponent"));
 }
 
 void AERKey::BeginPlay()
@@ -28,7 +28,7 @@ void AERKey::InteractHoldTriggered_Implementation()
 {
 	Super::InteractHoldTriggered_Implementation();
 
-	KeyComponent->UnlockLockedItems();
+	UnlockerComponent->UnlockItems();
 }
 
 void AERKey::InteractHoldCompleted_Implementation()

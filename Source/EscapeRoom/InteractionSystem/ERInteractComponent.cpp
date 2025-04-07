@@ -140,30 +140,44 @@ void UERInteractComponent::InteractHoldStarted(const FInputActionInstance& Insta
 		if (UInputTriggerHold* TriggerHold{Cast<UInputTriggerHold>(Trigger)})
 		{
 			TriggerHold->HoldTimeThreshold = IERInteractInterface::Execute_InteractHoldStarted(InteractableActor, CharacterOwner);
+			UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *FString(__FUNCTION__), *TriggerHold->GetDebugState())
 			break;
 		}
 	}
+
+	bIsHolding = true;
 }
 
 void UERInteractComponent::InteractHoldOngoing(const FInputActionInstance& Instance)
 {
-	if (InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
+	if (bIsHolding && InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
 	{
 		IERInteractInterface::Execute_InteractHoldOngoing(InteractableActor, Instance.GetElapsedTime());
+
+		for (UInputTrigger* Trigger : Instance.GetTriggers())
+		{
+			if (UInputTriggerHold* TriggerHold{Cast<UInputTriggerHold>(Trigger)})
+			{
+				UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *FString(__FUNCTION__), *TriggerHold->GetDebugState())
+				break;
+			}
+		}
 	}
 }
 
 void UERInteractComponent::InteractHoldCanceled()
 {
-	if (InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
+	if (bIsHolding && InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
 	{
+		bIsHolding = false;
+
 		IERInteractInterface::Execute_InteractHoldCanceled(InteractableActor);
 	}
 }
 
 void UERInteractComponent::InteractHoldTriggered()
 {
-	if (InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
+	if (bIsHolding && InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
 	{
 		IERInteractInterface::Execute_InteractHoldTriggered(InteractableActor);
 	}
@@ -172,8 +186,10 @@ void UERInteractComponent::InteractHoldTriggered()
 // ReSharper disable once CppMemberFunctionMayBeConst
 void UERInteractComponent::InteractHoldCompleted()
 {
-	if (InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
+	if (bIsHolding && InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
 	{
+		bIsHolding = false;
+
 		IERInteractInterface::Execute_InteractHoldCompleted(InteractableActor);
 	}
 }
@@ -223,46 +239,32 @@ void UERInteractComponent::PerformInteractionCheck()
 			ECC_Visibility)
 	};
 
-	// If nothing was hit, reset interaction and return
-	if (!bHit)
-	{
-		ClearInteraction();
-		return;
-	}
-
-	// Validate actor and interface
+	/**
+	 * Clear interaction if at least one of below conditions is met:
+	 * - nothing was hit
+	 * - HitResult is not an actor
+	 * - HitActor doesn't implement interact interface
+	 * - HitActor is not allowed to interact
+	 */
 	AActor* HitActor{HitResult.GetActor()};
 	UPrimitiveComponent* HitComponent{HitResult.GetComponent()};
-	if (!HitActor || !HitActor->Implements<UERInteractInterface>())
+	if (!bHit || !HitActor || !HitActor->Implements<UERInteractInterface>() || !IERInteractInterface::Execute_GetCanInteract(HitActor))
 	{
 		ClearInteraction();
 		return;
 	}
 
-	// Check if the actor is currently interactable
-	if (!IERInteractInterface::Execute_GetCanInteract(HitActor))
-	{
-		ClearInteraction();
-		return;
-	}
-
-	// Determine if we use a custom interact area
 	const bool bUsesCustomInteractArea{IERInteractInterface::Execute_DoesUseCustomInteractArea(HitActor)};
-	if (bUsesCustomInteractArea)
+	// Check if a custom interaction area is used:
+	// compare components in this case
+	if (bUsesCustomInteractArea && HitComponent == InteractableHitComponent)
 	{
-		// If hit the same interactable component, do nothing and return
-		if (HitComponent == InteractableHitComponent)
-		{
-			return;
-		}
+		return;
 	}
-	else
+	// otherwise, compare actors
+	if (!bUsesCustomInteractArea && HitActor == InteractableActor)
 	{
-		// If hit the same interactable actor, do nothing and return
-		if (HitActor == InteractableActor)
-		{
-			return;
-		}
+		return;
 	}
 
 	// Hide UI from previously focused interactable object
@@ -298,6 +300,11 @@ void UERInteractComponent::SetInteraction(AActor* InteractedActor, UPrimitiveCom
 
 void UERInteractComponent::ClearInteraction()
 {
+	if (bIsHolding)
+	{
+		InteractHoldCanceled();
+	}
+
 	if (InteractableActor)
 	{
 		IERInteractInterface::Execute_DisplayInteractionUI(InteractableActor, false);

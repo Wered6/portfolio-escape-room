@@ -2,12 +2,12 @@
 
 
 #include "ERKeypadPassword.h"
-#include "EscapeRoom/LockKeySystem/ERKeyComponent.h"
+#include "EscapeRoom/LockSystem/ERUnlockerComponent.h"
 
 
 AERKeypadPassword::AERKeypadPassword()
 {
-	KeyComponent = CreateDefaultSubobject<UERKeyComponent>(TEXT("KeyComponent"));
+	UnlockerComponent = CreateDefaultSubobject<UERUnlockerComponent>(TEXT("UnlockerComponent"));
 }
 
 void AERKeypadPassword::BeginPlay()
@@ -43,7 +43,7 @@ void AERKeypadPassword::CheckPassword()
 {
 	if (Password == UserPassword)
 	{
-		KeyComponent->UnlockLockedItems();
+		UnlockerComponent->UnlockItems();
 		LedFlash(ELedColor::Green, LedLongFlashTime);
 		ExitKeypadMode();
 		Execute_SetCanInteract(this, false);

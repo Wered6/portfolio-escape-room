@@ -16,13 +16,14 @@ class ESCAPEROOM_API AERDoor : public AERInteractableActorBase
 public:
 	AERDoor();
 
+	virtual void OnConstruction(const FTransform& Transform) override;
+
+protected:
 	virtual void BeginPlay() override;
 
 private:
-	void PlayUnlockSound();
-
-	UPROPERTY(EditDefaultsOnly, Category="ER|Audio")
-	TObjectPtr<USoundBase> UnlockSound;
+	UFUNCTION()
+	void OnUnlockHandle();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess=true))
 	TObjectPtr<UERLockComponent> LockComponent;

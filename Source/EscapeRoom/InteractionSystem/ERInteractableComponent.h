@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ERInteractInterface.h"
 #include "Components/ActorComponent.h"
 #include "ERInteractableComponent.generated.h"
 
@@ -60,6 +61,8 @@ public:
 	EERInteractType GetInteractType() const;
 
 	// Interact interface functions end
+
+	void SetInteractCategory(const EERInteractCategory InInteractCategory);
 
 	UPROPERTY(EditAnywhere, Category="ER|Interact")
 	EERInteractCategory InteractCategory{};

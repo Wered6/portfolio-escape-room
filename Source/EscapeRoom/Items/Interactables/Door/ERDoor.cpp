@@ -3,8 +3,7 @@
 
 #include "ERDoor.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
-#include "EscapeRoom/LockKeySystem/ERLockComponent.h"
-#include "Kismet/GameplayStatics.h"
+#include "EscapeRoom/LockSystem/ERLockComponent.h"
 
 
 AERDoor::AERDoor()
@@ -24,27 +23,25 @@ AERDoor::AERDoor()
 	HandleMesh->SetupAttachment(DoorMesh);
 
 	LockComponent = CreateDefaultSubobject<UERLockComponent>(TEXT("LockComponent"));
+
+	InteractableComp->AddOutlineMeshComponent(HandleMesh);
+}
+
+void AERDoor::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	InteractableComp->InteractCategory = LockComponent->GetIsLocked() ? EERInteractCategory::Unlock : EERInteractCategory::Open;
 }
 
 void AERDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InteractableComp->AddOutlineMeshComponent(HandleMesh);
-
-	LockComponent->OnUnlock.BindUObject(this, &AERDoor::PlayUnlockSound);
+	LockComponent->OnUnlockDelegate.AddDynamic(this, &AERDoor::OnUnlockHandle);
 }
 
-// ReSharper disable once CppMemberFunctionMayBeConst
-void AERDoor::PlayUnlockSound()
+void AERDoor::OnUnlockHandle()
 {
-#pragma region Nullchecks
-	if (!UnlockSound)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|UnlockSound is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
-
-	UGameplayStatics::PlaySoundAtLocation(this, UnlockSound, GetActorLocation());
+	InteractableComp->SetInteractCategory(EERInteractCategory::Open);
 }

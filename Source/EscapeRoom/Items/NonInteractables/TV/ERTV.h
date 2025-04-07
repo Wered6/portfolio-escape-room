@@ -11,7 +11,7 @@ class UMediaTexture;
 class AERFlashlight;
 class UERTVConverterScreenWidget;
 class AERAlarmClock;
-class UERKeyComponent;
+class UERUnlockerComponent;
 class UFileMediaSource;
 class UMediaPlayer;
 class UMediaSoundComponent;
@@ -77,7 +77,7 @@ private:
 	TObjectPtr<UMaterialInstanceDynamic> ScreenDynMat;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UERKeyComponent> KeyComponent;
+	TObjectPtr<UERUnlockerComponent> UnlockerComponent;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> RootMesh;

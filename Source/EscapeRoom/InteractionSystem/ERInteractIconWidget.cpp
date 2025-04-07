@@ -42,21 +42,7 @@ void UERInteractIconWidget::NativePreConstruct()
 	}
 #pragma endregion
 
-	switch (InteractCategory)
-	{
-	case EERInteractCategory::Use:
-		IconSwitcher->SetActiveWidget(UseIcon);
-		break;
-	case EERInteractCategory::Collect:
-		IconSwitcher->SetActiveWidget(CollectIcon);
-		break;
-	case EERInteractCategory::Open:
-		IconSwitcher->SetActiveWidget(OpenIcon);
-		break;
-	case EERInteractCategory::Unlock:
-		IconSwitcher->SetActiveWidget(UnlockIcon);
-		break;
-	}
+	SetInteractCategory(InteractCategory);
 
 	switch (InteractType)
 	{
@@ -91,6 +77,25 @@ void UERInteractIconWidget::Init(const EERInteractCategory NewInteractCategory,
 	IconSize = NewIconSize;
 	MinimalProgressCircleOpacity = NewMinimalProgressCircleOpacity;
 	ProgressCircleSize = NewProgressCircleSize;
+}
+
+void UERInteractIconWidget::SetInteractCategory(const EERInteractCategory InInteractCategory)
+{
+	switch (InInteractCategory)
+	{
+	case EERInteractCategory::Use:
+		IconSwitcher->SetActiveWidget(UseIcon);
+		break;
+	case EERInteractCategory::Collect:
+		IconSwitcher->SetActiveWidget(CollectIcon);
+		break;
+	case EERInteractCategory::Open:
+		IconSwitcher->SetActiveWidget(OpenIcon);
+		break;
+	case EERInteractCategory::Unlock:
+		IconSwitcher->SetActiveWidget(UnlockIcon);
+		break;
+	}
 }
 
 void UERInteractIconWidget::SetIconSize(const FVector2D Size) const
@@ -169,44 +174,4 @@ void UERInteractIconWidget::SetProgressCirclePercent(const float Percent)
 	const float ClampedPercent{FMath::Clamp(Percent, 0.f, 1.f)};
 	CurrentProgressCirclePercent = ClampedPercent;
 	ProgressCircle->SetPercent(CurrentProgressCirclePercent);
-}
-
-void UERInteractIconWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
-{
-	Super::NativeTick(MyGeometry, InDeltaTime);
-
-#pragma region Nullchecks
-	if (!ProgressCircle)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|ProgressCircle is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
-
-	// Check if progress or opacity needs to be reduced
-	const bool bNeedsReduction
-	{
-		CurrentIconOpacity > MinimalIconOpacity || CurrentProgressCircleOpacity > MinimalProgressCircleOpacity || CurrentProgressCirclePercent > 0.f
-	};
-	// Decrease progress and opacity when not holding and if interact type is hold.
-	if (InteractType == EERInteractType::Hold && !bIsHolding && bNeedsReduction)
-	{
-		DecreaseIconOpacity(InDeltaTime);
-		DecreaseProgressCircleOpacity(InDeltaTime);
-		SetProgressCirclePercent(CurrentProgressCirclePercent - InDeltaTime);
-	}
-}
-
-void UERInteractIconWidget::DecreaseIconOpacity(const float Value)
-{
-	CurrentIconOpacity -= Value;
-	CurrentIconOpacity = FMath::Clamp(CurrentIconOpacity, MinimalIconOpacity, 1.f);
-	IconSwitcher->SetRenderOpacity(CurrentIconOpacity);
-}
-
-void UERInteractIconWidget::DecreaseProgressCircleOpacity(const float Value)
-{
-	CurrentProgressCircleOpacity -= Value;
-	CurrentProgressCircleOpacity = FMath::Clamp(CurrentProgressCircleOpacity, MinimalProgressCircleOpacity, 1.f);
-	ProgressCircle->SetOpacity(CurrentProgressCircleOpacity);
 }

@@ -27,6 +27,12 @@ public:
 	          const float NewMinimalProgressCircleOpacity,
 	          const FVector2D NewProgressCircleSize);
 
+	/**
+	 * Configures the active widget of the icon switcher based on the specified interaction category.
+	 *
+	 * @param InInteractCategory The category of interaction to determine the active icon widget.
+	 */
+	void SetInteractCategory(const EERInteractCategory InInteractCategory);
 	void SetIconSize(const FVector2D Size) const;
 	/**
 	 * Sets the opacity of the interaction icon by interpolating between the minimal and 1.f opacity.
@@ -51,25 +57,7 @@ public:
 	 */
 	void SetProgressCirclePercent(const float Percent);
 
-	FORCEINLINE void SetIsHolding(const bool bNewIsHolding)
-	{
-		bIsHolding = bNewIsHolding;
-	}
-
-protected:
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
 private:
-	/**
-	 * Reduces the opacity of the interaction icon by a specified value.
-	 */
-	void DecreaseIconOpacity(const float Value);
-	/**
-	 * Reduces the opacity of the progress circle by the specified value.
-	 *
-	 */
-	void DecreaseProgressCircleOpacity(const float Value);
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess=true), Category="ER|Interact")
 	EERInteractCategory InteractCategory;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess=true), Category="ER|Interact")
@@ -91,8 +79,6 @@ private:
 	float CurrentProgressCircleOpacity{};
 	UPROPERTY(VisibleAnywhere, Category="ER|Interact")
 	float CurrentProgressCirclePercent{};
-	UPROPERTY(VisibleAnywhere, Category="ER|Interact")
-	bool bIsHolding{};
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget, AllowPrivateAccess=true), Category="ER|Interact")
 	TObjectPtr<UERProgressCircle> ProgressCircle;

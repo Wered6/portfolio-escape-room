@@ -6,7 +6,7 @@
 #include "ERKeypadBase.h"
 #include "ERKeypadPassword.generated.h"
 
-class UERKeyComponent;
+class UERUnlockerComponent;
 
 DECLARE_DELEGATE(FOnCorrectPassword)
 DECLARE_DELEGATE(FOnWrongPassword)
@@ -38,7 +38,5 @@ private:
 	FString UserPassword;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UERKeyComponent> KeyComponent;
-
-	// TODO try to combine meshes and textures to lower the size
+	TObjectPtr<UERUnlockerComponent> UnlockerComponent;
 };

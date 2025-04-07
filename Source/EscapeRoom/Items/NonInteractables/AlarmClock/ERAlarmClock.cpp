@@ -93,5 +93,4 @@ void AERAlarmClock::StartClock()
 	DynamicMaterial->SetTextureParameterValue(FName("Texture"), AlarmClockWidgetComp->GetRenderTarget());
 
 	bStartTimer = true;
-	UE_LOG(LogTemp, Warning, TEXT("started"))
 }

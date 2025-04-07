@@ -83,5 +83,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="ER|Interact|Input")
 	TObjectPtr<UInputAction> InteractHoldAction;
 
+	bool bIsHolding{false};
+
 #pragma endregion
 };
