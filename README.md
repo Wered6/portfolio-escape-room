@@ -11,10 +11,10 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 | Mechanic                                                                          | Description                                                     |
 |-----------------------------------------------------------------------------------|-----------------------------------------------------------------|
 | [Interact System](#interact-system) ([code](Source/EscapeRoom/InteractionSystem)) | Core interaction system                                         |
-| Lock-Key System (to be documented)                                                | Lock and key mechanic with keys and matching locks              |
+| Lock System (to be documented)                                                    | Lock and key mechanic with keys and matching locks              |
 | UV Flashlight (to be documented)                                                  | Reveals hidden clues or writings when aimed at certain surfaces |
 | Interactive Keypads (to be documented)                                            | Custom keypads for puzzles with code input and validation logic |
-| TV System (to be documented)                                                      | Plays movies or switches to interactive widgets                 |
+| TV (to be documented)                                                             | Plays movies or switches to interactive widgets                 |
 
 # Interact System
 
