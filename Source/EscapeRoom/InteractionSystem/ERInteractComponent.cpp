@@ -153,15 +153,6 @@ void UERInteractComponent::InteractHoldOngoing(const FInputActionInstance& Insta
 	if (bIsHolding && InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Hold)
 	{
 		IERInteractInterface::Execute_InteractHoldOngoing(InteractableActor, Instance.GetElapsedTime());
-
-		for (UInputTrigger* Trigger : Instance.GetTriggers())
-		{
-			if (UInputTriggerHold* TriggerHold{Cast<UInputTriggerHold>(Trigger)})
-			{
-				UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *FString(__FUNCTION__), *TriggerHold->GetDebugState())
-				break;
-			}
-		}
 	}
 }
 
