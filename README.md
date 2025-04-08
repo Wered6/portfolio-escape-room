@@ -228,7 +228,7 @@ InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
 
 </details>
 
-### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L216))
+### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L228))
 
 By default widget is attached to the root of object. We can adjust that by overriding [interact interface](#interact-interface-code)
 function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and retransform widget attachment as we wish.
