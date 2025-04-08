@@ -278,7 +278,7 @@ in [Interactable Component](#interactable-component-code).
 | [InteractHoldStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L77)    | has basic logic for setting interact instigator and setting holding logic, called as soon as we press interaction key                                                         |
 | [InteractHoldOngoing](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L93)    | has basic logic for interpolating widget visuals, called every frame for [HoldTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L89)               |
 | InteractHoldTriggered                                                                         | has NO basic logic, override it to provide interaction logic, called after [HoldTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L89)             |
-| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L116)  | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered was never getting called |
+| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L114)  | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered was never getting called |
 | [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L131) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                           |
 
 We can override them in C++ and Blueprints.  
