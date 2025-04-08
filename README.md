@@ -312,10 +312,10 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 | Function                                                                                          | Description                                                                                                            |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L146) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L250))   |
-| [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L151)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
-| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L156)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L243))                    |
-| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L161)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L101))                      |
+| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L145) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L250))   |
+| [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L150)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
+| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L155)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L243))                    |
+| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L160)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L101))                      |
 
 </details>
 
