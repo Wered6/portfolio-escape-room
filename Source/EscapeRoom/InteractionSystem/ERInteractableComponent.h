@@ -105,6 +105,13 @@ private:
 	void UpdateWidgetAttachment() const;
 
 	/**
+	 * Updates the outline rendering state for associated mesh components.
+	 *
+	 * @param bHighlight Determines whether the outline should be enabled or disabled.
+	 */
+	void UpdateOutline(const bool bHighlight);
+
+	/**
 	 * Pointer to the actor initiating the interaction, updated during interaction events.
 	 * Used to track and manage the instigator of a specific interaction session.
 	 */

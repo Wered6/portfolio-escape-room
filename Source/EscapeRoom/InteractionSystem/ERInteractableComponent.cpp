@@ -47,14 +47,7 @@ void UERInteractableComponent::DisplayInteractionUI(const bool bShowInteract)
 
 	InteractWidget->SetVisibility(bShowInteract ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 
-	for (UMeshComponent* OutlineMeshComponent : OutlineMeshComps)
-	{
-		if (OutlineMeshComponent)
-		{
-			OutlineMeshComponent->SetRenderCustomDepth(bShowInteract);
-			OutlineMeshComponent->SetCustomDepthStencilValue(bShowInteract ? 1 : 0);
-		}
-	}
+	UpdateOutline(bShowInteract);
 }
 
 void UERInteractableComponent::InteractPressStarted(AActor* OtherInstigator)
@@ -241,4 +234,16 @@ void UERInteractableComponent::UpdateWidgetAttachment() const
 		WidgetAttachComp = GetOwner()->GetRootComponent();
 	}
 	InteractWidgetComp->AttachToComponent(WidgetAttachComp, FAttachmentTransformRules::KeepRelativeTransform);
+}
+
+void UERInteractableComponent::UpdateOutline(const bool bHighlight)
+{
+	for (UMeshComponent* OutlineMeshComponent : OutlineMeshComps)
+	{
+		if (OutlineMeshComponent)
+		{
+			OutlineMeshComponent->SetRenderCustomDepth(bHighlight);
+			OutlineMeshComponent->SetCustomDepthStencilValue(bHighlight ? 1 : 0);
+		}
+	}
 }
