@@ -8,15 +8,15 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 
 ## 🛠️ Key Mechanics Implemented
 
-| Mechanic                                                                          | Description                                                     |
-|-----------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| [Interact System](#interact-system) ([code](Source/EscapeRoom/InteractionSystem)) | Core interaction system                                         |
-| Lock System (to be documented)                                                    | Lock and key mechanic with keys and matching locks              |
-| UV Flashlight (to be documented)                                                  | Reveals hidden clues or writings when aimed at certain surfaces |
-| Interactive Keypads (to be documented)                                            | Custom keypads for puzzles with code input and validation logic |
-| TV (to be documented)                                                             | Plays movies or switches to interactive widgets                 |
+| Mechanic                                                                                | Description                                                     |
+|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| [Interaction System](#interaction-system) ([code](Source/EscapeRoom/InteractionSystem)) | Core interaction system                                         |
+| Lock System (to be documented)                                                          | Lock and key mechanic with keys and matching locks              |
+| UV Flashlight (to be documented)                                                        | Reveals hidden clues or writings when aimed at certain surfaces |
+| Interactive Keypads (to be documented)                                                  | Custom keypads for puzzles with code input and validation logic |
+| TV (to be documented)                                                                   | Plays movies or switches to interactive widgets                 |
 
-# Interact System
+# Interaction System
 
 I implemented a designer-friendly customizable FPP interaction system based on line trace, fully usable in both C++ and Blueprints.
 
