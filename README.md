@@ -161,7 +161,7 @@ In both scenarios you have to set Interact Widget Class.
 
 </details>
 
-### Outline ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L50))
+### Outline ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L239))
 
 To outline meshes I used Outline material, which I added to Post Process Volume materials and change `Custom Depth-Stencil Pass` in Project
 Settings to `Enabled with Stencil`.  
