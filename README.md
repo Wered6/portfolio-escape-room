@@ -196,7 +196,7 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 
 </details>
 
-### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L257))
+### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L248))
 
 By default interact area is whole object. We can adjust that by setting `bUseCustomInteractArea` to `true`. After this we have to add
 collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.
