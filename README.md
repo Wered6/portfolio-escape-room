@@ -323,8 +323,8 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 Widget that is attached to every interactable object. Based on `InteractCategory` and `InteractType` it switches icons and
 shows/hides [progress circle](#progress-circle-code) accordingly.  
-We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L81)
-function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L203).
+We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L67)
+function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L215).
 
 <details>
 <summary>Screens</summary>
