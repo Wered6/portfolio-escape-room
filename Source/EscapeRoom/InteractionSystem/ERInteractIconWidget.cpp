@@ -49,7 +49,6 @@ void UERInteractIconWidget::NativePreConstruct()
 	case EERInteractType::Press:
 		ProgressCircle->SetVisibility(ESlateVisibility::Collapsed);
 		SetIconOpacity(1.f);
-		UE_LOG(LogTemp, Warning, TEXT("Press"))
 		break;
 	case EERInteractType::Hold:
 		ProgressCircle->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
@@ -57,7 +56,6 @@ void UERInteractIconWidget::NativePreConstruct()
 		SetProgressCircleOpacity(0.f);
 		SetProgressCirclePercent(0.f);
 		SetProgressCircleSize(ProgressCircleSize);
-		UE_LOG(LogTemp, Warning, TEXT("Hold"))
 		break;
 	}
 

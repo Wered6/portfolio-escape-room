@@ -8,6 +8,7 @@
 #include "ERInteractIconWidget.h"
 #include "ERInteractInterface.h"
 #include "Components/WidgetComponent.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogInteractableComponent, Log, All);
 
@@ -181,13 +182,7 @@ void UERInteractableComponent::OnRegister()
 
 void UERInteractableComponent::InitializeInteractWidget()
 {
-#pragma region Nullchecks
-	if (!InteractWidgetClass)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidgetClass is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	NULLCHECK_DEBUG(InteractWidgetClass)
 
 	InteractWidget = CreateWidget<UERInteractIconWidget>(GetWorld(), InteractWidgetClass);
 	InteractWidgetComp = NewObject<UWidgetComponent>(this, TEXT("InteractWidgetComp"));
