@@ -96,7 +96,6 @@ void UERInteractComponent::InteractHoldStarted(const FInputActionInstance& Insta
 		if (UInputTriggerHold* TriggerHold{Cast<UInputTriggerHold>(Trigger)})
 		{
 			TriggerHold->HoldTimeThreshold = IERInteractInterface::Execute_InteractHoldStarted(InteractableActor, CharacterOwner);
-			UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *FString(__FUNCTION__), *TriggerHold->GetDebugState())
 			break;
 		}
 	}
