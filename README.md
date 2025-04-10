@@ -8,17 +8,17 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 
 ## 🛠️ Key Mechanics Implemented
 
-| Mechanic                                                                                | Description                                                     |
-|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| [Interaction System](#interaction-system) ([code](Source/EscapeRoom/InteractionSystem)) | Core interaction system                                         |
-| Lock System (to be documented)                                                          | Lock and key mechanic with keys and matching locks              |
-| UV Flashlight (to be documented)                                                        | Reveals hidden clues or writings when aimed at certain surfaces |
-| Interactive Keypads (to be documented)                                                  | Custom keypads for puzzles with code input and validation logic |
-| TV (to be documented)                                                                   | Plays movies or switches to interactive widgets                 |
+| Mechanic                                                                                     | Description                                                     |
+|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| [Interaction System](#interaction-system-code) ([code](Source/EscapeRoom/InteractionSystem)) | FPP interaction system based on raycast                         |
+| [Lock System](#lock-system-code) ([code](Source/EscapeRoom/LockSystem))                      | Lock and unlocker components, may locks - many unlockers        |
+| UV Flashlight (to be documented)                                                             | Reveals hidden clues or writings when aimed at certain surfaces |
+| Interactive Keypads (to be documented)                                                       | Custom keypads for puzzles with code input and validation logic |
+| TV (to be documented)                                                                        | Plays movies or switches to interactive widgets                 |
 
-# Interaction System
+# Interaction System ([code](Source/EscapeRoom/InteractionSystem))
 
-I implemented a designer-friendly customizable FPP interaction system based on line trace, fully usable in both C++ and Blueprints.
+I implemented a designer-friendly customizable FPP interaction system based on raycast, fully usable in both C++ and Blueprints.
 
 <details>
 <summary>More</summary>
@@ -196,7 +196,7 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 
 </details>
 
-### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L192))
+### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L191))
 
 By default interact area is whole object. We can adjust that by setting `bUseCustomInteractArea` to `true`. After this we have to add
 collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.
@@ -312,9 +312,9 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 | Function                                                                                          | Description                                                                                                            |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L107) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L192))   |
+| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L107) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L191))   |
 | [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L112)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
-| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L117)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L186))                    |
+| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L117)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L185))                    |
 | [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L122)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L63))                       |
 
 </details>
@@ -350,3 +350,19 @@ In case screen is not readable enough - [here](https://blueprintue.com/render/n1
 </details>
 
 </details>
+
+# Lock System ([code](Source/EscapeRoom/LockSystem))
+
+I implemented a designer-friendly customizable lock system, based on two components.  
+We can unlock locked object with as many unlockers as we want, and vice versa - any unlocker can unlock as many locked objects as we want.
+
+# Implementations
+
+- [**Lock component**](#lock-component-code) ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
+- [**Unlocker component**](#unlocker-component-code) ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
+
+## Lock component ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
+
+
+
+## Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
