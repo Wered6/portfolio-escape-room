@@ -38,13 +38,7 @@ void UERInteractableComponent::SetOutlineMeshComponents(const TArray<UMeshCompon
 
 void UERInteractableComponent::DisplayInteractionUI(const bool bShowInteract)
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidget)
 
 	InteractWidget->SetVisibility(bShowInteract ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 
@@ -70,13 +64,7 @@ void UERInteractableComponent::InteractPressCompleted()
 
 float UERInteractableComponent::InteractHoldStarted(AActor* OtherInstigator)
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return 0.f;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUGF(InteractWidget)
 
 	InteractInstigator = OtherInstigator;
 	UE_LOG(LogTemp, Warning, TEXT("HoldStarted"))
@@ -86,13 +74,7 @@ float UERInteractableComponent::InteractHoldStarted(AActor* OtherInstigator)
 
 void UERInteractableComponent::InteractHoldOngoing(const float ElapsedSeconds)
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidget)
 
 	const float ProgressFraction{FMath::Clamp(ElapsedSeconds / HoldTimeThreshold, 0.f, 1.f)};
 	InteractWidget->SetIconOpacity(ProgressFraction);
@@ -107,13 +89,7 @@ void UERInteractableComponent::InteractHoldTriggered()
 
 void UERInteractableComponent::InteractHoldCanceled()
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidget)
 
 	InteractInstigator = nullptr;
 	InteractWidget->SetProgressCircleOpacity(0.f);
@@ -124,14 +100,6 @@ void UERInteractableComponent::InteractHoldCanceled()
 
 void UERInteractableComponent::InteractHoldCompleted()
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
-
 	InteractInstigator = nullptr;
 	UE_LOG(LogTemp, Warning, TEXT("HoldCompleted"))
 }
@@ -158,13 +126,7 @@ EERInteractType UERInteractableComponent::GetInteractType() const
 
 void UERInteractableComponent::SetInteractCategory(const EERInteractCategory InInteractCategory)
 {
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidget)
 
 	InteractWidget->SetInteractCategory(InInteractCategory);
 }
@@ -182,23 +144,13 @@ void UERInteractableComponent::OnRegister()
 
 void UERInteractableComponent::InitializeInteractWidget()
 {
-	NULLCHECK_DEBUG(InteractWidgetClass)
+	UVALID_LOG_DEBUG(InteractWidgetClass)
 
 	InteractWidget = CreateWidget<UERInteractIconWidget>(GetWorld(), InteractWidgetClass);
 	InteractWidgetComp = NewObject<UWidgetComponent>(this, TEXT("InteractWidgetComp"));
 
-#pragma region Nullchecks
-	if (!InteractWidget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidget is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!InteractWidgetComp)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidgetComp is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidget)
+	UVALID_LOG_DEBUG(InteractWidgetComp)
 
 	InteractWidget->Init(InteractCategory,
 	                     InteractType,
@@ -215,13 +167,7 @@ void UERInteractableComponent::InitializeInteractWidget()
 
 void UERInteractableComponent::UpdateWidgetAttachment() const
 {
-#pragma region Nullchecks
-	if (!InteractWidgetComp)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractWidgetComp is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(InteractWidgetComp)
 
 	USceneComponent* WidgetAttachComp{IERInteractInterface::Execute_GetWidgetAttachmentComponent(GetOwner())};
 	if (!WidgetAttachComp)

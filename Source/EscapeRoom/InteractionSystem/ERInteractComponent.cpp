@@ -4,7 +4,9 @@
 #include "ERInteractComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 #include "EscapeRoom/InteractionSystem/ERInteractInterface.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 #include "GameFramework/Character.h"
 
 
@@ -19,54 +21,20 @@ void UERInteractComponent::BeginPlay()
 
 	CharacterOwner = Cast<ACharacter>(GetOwner());
 
-#pragma region Nullchecks
-	if (!CharacterOwner)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|CharacterOwner is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!InteractMappingContext)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractMappingContext is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!InteractPressAction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractPressAction is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!InteractHoldAction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|InteractHoldAction is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(CharacterOwner)
+	UVALID_LOG_DEBUG(InteractMappingContext)
+	UVALID_LOG_DEBUG(InteractPressAction)
+	UVALID_LOG_DEBUG(InteractHoldAction)
 
 	const APlayerController* PlayerController{CharacterOwner->GetController<APlayerController>()};
 
-#pragma region Nullchecks
-	if (!PlayerController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PlayerController is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(PlayerController)
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem{ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())};
 	UEnhancedInputComponent* EnhancedInputComponent{Cast<UEnhancedInputComponent>(PlayerController->InputComponent)};
 
-#pragma region Nullchecks
-	if (!Subsystem)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|Subsystem is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!EnhancedInputComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|EnhancedInputComponent is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(Subsystem)
+	UVALID_LOG_DEBUG(EnhancedInputComponent)
 
 	Subsystem->AddMappingContext(InteractMappingContext, 0);
 
@@ -90,13 +58,7 @@ void UERInteractComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UERInteractComponent::InteractPressStarted()
 {
-#pragma region Nullchecks
-	if (!CharacterOwner)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|CharacterOwner is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(CharacterOwner)
 
 	if (InteractableActor && InteractableActor->Implements<UERInteractInterface>() && IERInteractInterface::Execute_GetInteractType(InteractableActor) == EERInteractType::Press)
 	{
@@ -122,13 +84,7 @@ void UERInteractComponent::InteractPressCompleted()
 
 void UERInteractComponent::InteractHoldStarted(const FInputActionInstance& Instance)
 {
-#pragma region Nullchecks
-	if (!CharacterOwner)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|CharacterOwner is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(CharacterOwner)
 
 	if (!InteractableActor || !InteractableActor->Implements<UERInteractInterface>() || IERInteractInterface::Execute_GetInteractType(InteractableActor) != EERInteractType::Hold)
 	{
@@ -192,23 +148,11 @@ void UERInteractComponent::PerformInteractionCheck()
 		return;
 	}
 
-#pragma region Nullchecks
-	if (!CharacterOwner)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|CharacterOwner is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(CharacterOwner)
 
 	const APlayerController* PlayerController{CharacterOwner->GetController<APlayerController>()};
 
-#pragma region Nullchecks
-	if (!PlayerController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PlayerController is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(PlayerController)
 
 	// Get camera location and direction
 	FVector CameraLocation;

@@ -3,44 +3,19 @@
 #include "ERProgressCircle.h"
 #include "Components/Image.h"
 #include "Components/WidgetSwitcher.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 
 void UERInteractIconWidget::NativePreConstruct()
 {
 	Super::NativePreConstruct();
 
-#pragma region Nullchecks
-	if (!IconSwitcher)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|IconSwitcher is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!CollectIcon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|CollectIcon is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!OpenIcon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|OpenIcon is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!UseIcon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|UseIcon is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!UnlockIcon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|UnlockIcon is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!ProgressCircle)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|ProgressCircle is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(IconSwitcher)
+	UVALID_LOG_DEBUG(CollectIcon)
+	UVALID_LOG_DEBUG(OpenIcon)
+	UVALID_LOG_DEBUG(UseIcon)
+	UVALID_LOG_DEBUG(UnlockIcon)
+	UVALID_LOG_DEBUG(ProgressCircle)
 
 	SetInteractCategory(InteractCategory);
 
@@ -98,13 +73,7 @@ void UERInteractIconWidget::SetInteractCategory(const EERInteractCategory InInte
 
 void UERInteractIconWidget::SetIconSize(const FVector2D Size) const
 {
-#pragma region Nullchecks
-	if (!IconSwitcher)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|IconSwitcher is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(IconSwitcher)
 
 	for (UWidget* Icon : IconSwitcher->GetAllChildren())
 	{
@@ -117,13 +86,7 @@ void UERInteractIconWidget::SetIconSize(const FVector2D Size) const
 
 void UERInteractIconWidget::SetIconOpacity(const float Opacity)
 {
-#pragma region Nullchecks
-	if (!IconSwitcher)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|IconSwitcher is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(IconSwitcher)
 
 	const float ClampedOpacity{FMath::Clamp(Opacity, 0.f, 1.f)};
 	CurrentIconOpacity = FMath::Lerp(MinimalIconOpacity, 1.f, ClampedOpacity);
@@ -133,26 +96,14 @@ void UERInteractIconWidget::SetIconOpacity(const float Opacity)
 
 void UERInteractIconWidget::SetProgressCircleSize(const FVector2D Size) const
 {
-#pragma region Nullchecks
-	if (!ProgressCircle)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|ProgressCircle is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(ProgressCircle)
 
 	ProgressCircle->SetImageSize(Size);
 }
 
 void UERInteractIconWidget::SetProgressCircleOpacity(const float Opacity)
 {
-#pragma region Nullchecks
-	if (!ProgressCircle)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|ProgressCircle is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(ProgressCircle)
 
 	const float ClampedOpacity{FMath::Clamp(Opacity, 0.f, 1.f)};
 	CurrentProgressCircleOpacity = FMath::Lerp(MinimalProgressCircleOpacity, 1.f, ClampedOpacity);
@@ -161,13 +112,7 @@ void UERInteractIconWidget::SetProgressCircleOpacity(const float Opacity)
 
 void UERInteractIconWidget::SetProgressCirclePercent(const float Percent)
 {
-#pragma region Nullchecks
-	if (!ProgressCircle)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|ProgressCircle is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(ProgressCircle)
 
 	const float ClampedPercent{FMath::Clamp(Percent, 0.f, 1.f)};
 	CurrentProgressCirclePercent = ClampedPercent;
