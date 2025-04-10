@@ -356,6 +356,8 @@ In case screen is not readable enough - [here](https://blueprintue.com/render/n1
 I implemented a designer-friendly customizable lock system, based on two components.  
 We can unlock locked object with as many unlockers as we want, and vice versa - any unlocker can unlock as many locked objects as we want.
 
+![LockSystem1](https://github.com/user-attachments/assets/bfb2cb91-38e5-428b-ace4-8e217e7fd946)
+
 # Implementations
 
 - [**Lock component**](#lock-component-code) ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
