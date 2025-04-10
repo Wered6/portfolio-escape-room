@@ -161,7 +161,7 @@ In both scenarios you have to set Interact Widget Class.
 
 </details>
 
-### Outline ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L239))
+### Outline ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L180))
 
 To outline meshes I used Outline material, which I added to Post Process Volume materials and change `Custom Depth-Stencil Pass` in Project
 Settings to `Enabled with Stencil`.  
@@ -196,7 +196,7 @@ InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 
 </details>
 
-### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L248))
+### Interact area ([logic](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L192))
 
 By default interact area is whole object. We can adjust that by setting `bUseCustomInteractArea` to `true`. After this we have to add
 collision with collision preset `InteractArea` and we can adjust its attachment, size and transform.
@@ -228,7 +228,7 @@ InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
 
 </details>
 
-### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L228))
+### Widget attachment ([logic](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L168))
 
 By default widget is attached to the root of object. We can adjust that by overriding [interact interface](#interact-interface-code)
 function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and retransform widget attachment as we wish.
@@ -270,15 +270,15 @@ in [Interactable Component](#interactable-component-code).
 
 | Function                                                                                      | Description                                                                                                                                                                   |
 |-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [DisplayInteractionUI](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L38)   | has basic logic for showing widget and outline correct meshes, called when looking at interactable object                                                                     |
-| [InteractPressStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L60)   | has basic logic for setting interact instigator, called as soon as we press interaction key                                                                                   |
+| [DisplayInteractionUI](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L39)   | has basic logic for showing widget and outline correct meshes, called when looking at interactable object                                                                     |
+| [InteractPressStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L48)   | has basic logic for setting interact instigator, called as soon as we press interaction key                                                                                   |
 | InteractPressTriggered                                                                        | has NO basic logic, override it to provide interaction logic, called after InteractPressStarted                                                                               |
-| [InteractPressCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L71) | has basic logic for resetting interact instigator, called after InteractPressTriggered                                                                                        |
-| [InteractHoldStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L77)    | has basic logic for setting interact instigator and setting holding logic, called as soon as we press interaction key                                                         |
-| [InteractHoldOngoing](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L93)    | has basic logic for interpolating widget visuals, called every frame for [HoldTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L89)               |
+| [InteractPressCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L59) | has basic logic for resetting interact instigator, called after InteractPressTriggered                                                                                        |
+| [InteractHoldStarted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L65)    | has basic logic for setting interact instigator and setting holding logic, called as soon as we press interaction key                                                         |
+| [InteractHoldOngoing](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L75)    | has basic logic for interpolating widget visuals, called every frame for [HoldTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L89)               |
 | InteractHoldTriggered                                                                         | has NO basic logic, override it to provide interaction logic, called after [HoldTimeThreshold](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.h#L89)             |
-| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L114)  | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered was never getting called |
-| [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L131) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                           |
+| [InteractHoldCanceled](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L90)   | has basic logic for resetting interact instigator and enables widget visuals to fade down, called when we stop holding key and InteractHoldTriggered was never getting called |
+| [InteractHoldCompleted](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L101) | has basic logic for resetting interact instigator and enables widget visuals to fade down, called after successful hold after InteractHoldTriggered                           |
 | GetWidgetAttachment                                                                           | has NO basic logic, override it to provide custom widget location/attachment                                                                                                  |
 
 We can override them in C++ and Blueprints.  
@@ -312,10 +312,10 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 | Function                                                                                          | Description                                                                                                            |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L145) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L250))   |
-| [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L150)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
-| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L155)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L243))                    |
-| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L160)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L101))                      |
+| [DoesUseCustomInteractArea](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L107) | determines usage of custom interact area ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L192))   |
+| [SetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L112)            | determines intractability, can be used to prevent further interaction or enable/disable interaction in specific moment |
+| [GetCanInteract](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L117)            | returns if can interact ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L186))                    |
+| [GetInteractType](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L122)           | returns interact type ([usage](Source/EscapeRoom/InteractionSystem/ERInteractComponent.cpp#L63))                       |
 
 </details>
 
@@ -323,8 +323,8 @@ void AERKey::InteractHoldTriggered_Implementation()
 
 Widget that is attached to every interactable object. Based on `InteractCategory` and `InteractType` it switches icons and
 shows/hides [progress circle](#progress-circle-code) accordingly.  
-We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L67)
-function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L215).
+We setting initial values thanks to [Init](Source/EscapeRoom/InteractionSystem/ERInteractIconWidget.cpp#L40)
+function - [usage](Source/EscapeRoom/InteractionSystem/ERInteractableComponent.cpp#L155).
 
 <details>
 <summary>Screens</summary>
