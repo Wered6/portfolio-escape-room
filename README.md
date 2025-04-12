@@ -375,7 +375,7 @@ Component we want to add to an object that can **unlock** locked objects, such a
 
 It's simple component that has two functions and two delegates.
 
-```
+```cpp
 void UnlockObjects();
 void LockObjects();
 
