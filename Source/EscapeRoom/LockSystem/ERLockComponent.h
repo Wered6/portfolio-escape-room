@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnlockSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockSignature);
 
-UCLASS(ClassGroup=(LockKey))
+UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent))
 class ESCAPEROOM_API UERLockComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -36,15 +36,25 @@ public:
 	FOnLockSignature OnLockDelegate;
 
 private:
-	void PopulateKeyItemsFromTags();
-	void BindKeys();
+	void PopulateUnlockersFromTags();
+	void BindUnlockers();
 
+	/**
+	 * Array of actors capable of unlocking the lock component.
+	 */
 	UPROPERTY(EditInstanceOnly, Category="ER|Lock")
-	TArray<AActor*> KeyItems;
+	TArray<AActor*> Unlockers;
 
+	/**
+	 * List of tags used to identify actors that can unlock the lock component.
+	 * Actors with matching tags will be added to the unlockers list.
+	 */
 	UPROPERTY(EditAnywhere, Category="ER|Lock")
-	TArray<FName> KeyTags;
+	TArray<FName> UnlockersTags;
 
+	/**
+	 * Specifies whether the lock component is currently locked.
+	 */
 	UPROPERTY(EditAnywhere, BlueprintGetter=GetIsLocked, Category="ER|Lock")
 	bool bIsLocked{true};
 };

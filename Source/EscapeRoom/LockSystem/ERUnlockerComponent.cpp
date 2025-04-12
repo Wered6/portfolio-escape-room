@@ -9,12 +9,12 @@ UERUnlockerComponent::UERUnlockerComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UERUnlockerComponent::UnlockItems()
+void UERUnlockerComponent::UnlockObjects()
 {
-	OnUnlockItemsDelegate.Broadcast();
+	OnUnlockObjectsDelegate.Broadcast();
 }
 
-void UERUnlockerComponent::LockItems()
+void UERUnlockerComponent::LockObjects()
 {
-	OnLockItemsDelegate.Broadcast();
+	OnLockObjectsDelegate.Broadcast();
 }

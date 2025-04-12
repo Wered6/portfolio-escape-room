@@ -15,8 +15,8 @@ void UERLockComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PopulateKeyItemsFromTags();
-	BindKeys();
+	PopulateUnlockersFromTags();
+	BindUnlockers();
 }
 
 void UERLockComponent::Unlock()
@@ -37,14 +37,14 @@ void UERLockComponent::Lock()
 	}
 }
 
-void UERLockComponent::PopulateKeyItemsFromTags()
+void UERLockComponent::PopulateUnlockersFromTags()
 {
-	if (KeyTags.IsEmpty())
+	if (UnlockersTags.IsEmpty())
 	{
 		return;
 	}
 
-	for (const FName Tag : KeyTags)
+	for (const FName Tag : UnlockersTags)
 	{
 		if (Tag.IsNone())
 		{
@@ -55,29 +55,29 @@ void UERLockComponent::PopulateKeyItemsFromTags()
 		TArray<AActor*> TaggedActors;
 		UGameplayStatics::GetAllActorsWithTag(this, Tag, TaggedActors);
 
-		KeyItems.Append(TaggedActors);
+		Unlockers.Append(TaggedActors);
 	}
 }
 
-void UERLockComponent::BindKeys()
+void UERLockComponent::BindUnlockers()
 {
-	for (const AActor* Item : KeyItems)
+	for (const AActor* Object : Unlockers)
 	{
-		if (!Item)
+		if (!Object)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("%s|%s: Item is nullptr."), *GetOwner()->GetName(), *FString(__FUNCTION__))
+			UE_LOG(LogTemp, Warning, TEXT("%s|%s: Object is nullptr."), *GetOwner()->GetName(), TEXT(__FUNCTION__))
 			return;
 		}
 
-		UERUnlockerComponent* KeyComponent{Item->FindComponentByClass<UERUnlockerComponent>()};
-		if (KeyComponent)
+		UERUnlockerComponent* UnlockerComponent{Object->FindComponentByClass<UERUnlockerComponent>()};
+		if (UnlockerComponent)
 		{
-			KeyComponent->OnUnlockItemsDelegate.AddUObject(this, &UERLockComponent::Unlock);
-			KeyComponent->OnLockItemsDelegate.AddUObject(this, &UERLockComponent::Lock);
+			UnlockerComponent->OnUnlockObjectsDelegate.AddUObject(this, &UERLockComponent::Unlock);
+			UnlockerComponent->OnLockObjectsDelegate.AddUObject(this, &UERLockComponent::Lock);
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("%s: does not have ERKeyComponent"), *Item->GetName())
+			UE_LOG(LogTemp, Warning, TEXT("%s: does not have UnlockerComponent"), *Object->GetName())
 			return;
 		}
 	}

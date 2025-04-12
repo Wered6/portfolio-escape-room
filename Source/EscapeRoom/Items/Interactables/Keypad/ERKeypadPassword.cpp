@@ -43,7 +43,7 @@ void AERKeypadPassword::CheckPassword()
 {
 	if (Password == UserPassword)
 	{
-		UnlockerComponent->UnlockItems();
+		UnlockerComponent->UnlockObjects();
 		LedFlash(ELedColor::Green, LedLongFlashTime);
 		ExitKeypadMode();
 		Execute_SetCanInteract(this, false);

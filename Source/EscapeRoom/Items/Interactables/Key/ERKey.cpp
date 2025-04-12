@@ -28,7 +28,7 @@ void AERKey::InteractHoldTriggered_Implementation()
 {
 	Super::InteractHoldTriggered_Implementation();
 
-	UnlockerComponent->UnlockItems();
+	UnlockerComponent->UnlockObjects();
 }
 
 void AERKey::InteractHoldCompleted_Implementation()

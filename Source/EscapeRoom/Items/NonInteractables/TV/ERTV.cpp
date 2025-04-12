@@ -136,7 +136,7 @@ bool AERTV::EnterSignToHangman(const FString& Sign) const
 	const bool CorrectSign{HangmanWidget->EnterSignToPassword(Sign)};
 	if (HangmanWidget->Password == HangmanWidget->UserPassword)
 	{
-		UnlockerComponent->UnlockItems();
+		UnlockerComponent->UnlockObjects();
 		if (OnCorrectHangmanPassword.IsBound())
 		{
 			OnCorrectHangmanPassword.Execute();

@@ -6,10 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "ERUnlockerComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnUnlockItemsSignature)
-DECLARE_MULTICAST_DELEGATE(FOnLockItemsSignature)
+DECLARE_MULTICAST_DELEGATE(FOnUnlockObjectsSignature)
+DECLARE_MULTICAST_DELEGATE(FOnLockObjectsSignature)
 
-UCLASS(ClassGroup=(LockKey))
+UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent))
 class ESCAPEROOM_API UERUnlockerComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -17,9 +17,9 @@ class ESCAPEROOM_API UERUnlockerComponent : public UActorComponent
 public:
 	UERUnlockerComponent();
 
-	void UnlockItems();
-	void LockItems();
+	void UnlockObjects();
+	void LockObjects();
 
-	FOnUnlockItemsSignature OnUnlockItemsDelegate;
-	FOnLockItemsSignature OnLockItemsDelegate;
+	FOnUnlockObjectsSignature OnUnlockObjectsDelegate;
+	FOnLockObjectsSignature OnLockObjectsDelegate;
 };

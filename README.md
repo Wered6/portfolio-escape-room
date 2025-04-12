@@ -356,6 +356,9 @@ In case screen is not readable enough - [here](https://blueprintue.com/render/n1
 I implemented a designer-friendly customizable lock system, based on two components.  
 We can unlock locked object with as many unlockers as we want, and vice versa - any unlocker can unlock as many locked objects as we want.
 
+<details>
+<summary>More</summary>
+
 ![LockSystem1](https://github.com/user-attachments/assets/bfb2cb91-38e5-428b-ace4-8e217e7fd946)
 
 # Implementations
@@ -363,8 +366,39 @@ We can unlock locked object with as many unlockers as we want, and vice versa - 
 - [**Lock component**](#lock-component-code) ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
 - [**Unlocker component**](#unlocker-component-code) ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
 
-## Lock component ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
+# Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
+
+Component we want to add to an object that can **unlock** locked objects, such as a *key*, *lever*, or *keypad*.
+
+<details>
+<summary>How it works</summary>
+
+It's simple component that has two functions and two delegates.
+
+```c++
+void UnlockObjects();
+void LockObjects();
+
+FOnUnlockObjectsSignature OnUnlockObjectsDelegate;
+FOnLockObjectsSignature OnLockObjectsDelegate;
+
+```
+
+Delegates are `MULTICAST` so we can bind more than one function. We `Broadcast` them in functions `UnlockItems` and `LockItems`
+
+</details>
+
+# Lock component ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
+
+Component which we want to add to object that should has lock. For example door.
+
+<details>
+<summary>How it works</summary>
+
+At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.  
+Then checks if every actor in `Unlockers` array has `UnlockerComponent`, if it does -
+
+</details>
 
 
-
-## Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
+</details>
