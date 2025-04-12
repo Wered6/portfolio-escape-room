@@ -13,7 +13,7 @@ class UInputMappingContext;
 /**
  * Component that enables character to interact with object which has InteractInterface
  */
-UCLASS(ClassGroup=(Interact))
+UCLASS(ClassGroup=(Interact), meta=(BlueprintSpawnableComponent), DisplayName="Interact Component")
 class ESCAPEROOM_API UERInteractComponent : public UActorComponent
 {
 	GENERATED_BODY()

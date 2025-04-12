@@ -58,14 +58,14 @@ It's easy to add to C++ class or Blueprint class.
 ***C++***  
 .h
 
-```cpp
+```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<UERInteractComponent> InteractComponent;
 ```
 
 constructor
 
-```cpp
+```c++
 InteractComponent = CreateDefaultSubobject<UERInteractComponent>(TEXT("InteractComponent"));
 ```
 
@@ -110,7 +110,7 @@ interactable component.
 ***C++***  
 .h
 
-```cpp
+```c++
 UCLASS()
 class ESCAPEROOM_API AKey : public AERInteractableActorBase
 
@@ -142,7 +142,7 @@ this component we can easily change properties via C++ or inside blueprint detai
 
 constructor
 
-```cpp
+```c++
 InteractableComp->InteractCategory = EERInteractCategory::Collect;
 InteractableComp->InteractType = EERInteractType::Hold;
 InteractableComp->IconSize = FVector2D(25.f, 25.f);
@@ -182,7 +182,7 @@ To select which mesh should outline we have to add them to array `OutlineMeshCom
 ***C++***  
 constructor or begin play
 
-```cpp
+```c++
 InteractableComp->AddOutlineMeshComponent(KeyMesh);
 
 ...
@@ -207,14 +207,14 @@ collision with collision preset `InteractArea` and we can adjust its attachment,
 ***C++***  
 .h
 
-```cpp
+```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<UBoxComponent> InteractBox;
 ```
 
 constructor
 
-```cpp
+```c++
 InteractableComp->bUseCustomInteractArea = true;
 InteractBox = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractBox"));
 InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
@@ -239,14 +239,14 @@ function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and re
 ***C++***  
 .h
 
-```cpp
+```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<USceneComponent> WidgetAttachment;
 ```
 
 constructor
 
-```cpp
+```c++
 WidgetAttachment = CreateDefaultSubobject<USceneComponent>(TEXT("WidgetAttachment"));
 WidgetAttachment->SetupAttachment(KeyMesh);
 ```
@@ -287,13 +287,13 @@ We can override them in C++ and Blueprints.
 ***C++***  
 .h
 
-```cpp
+```c++
 virtual void InteractHoldTriggered_Implementation() override;
 ```
 
 .cpp
 
-```cpp
+```c++
 void AERKey::InteractHoldTriggered_Implementation()
 {
   Super::InteractHoldTriggered_Implementation();
@@ -368,23 +368,65 @@ We can unlock locked object with as many unlockers as we want, and vice versa - 
 
 # Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
 
-Component we want to add to an object that can **unlock** locked objects, such as a *key*, *lever*, or *keypad*.
+Component for objects that can **unlock** locked objects, such as a *key*, *lever*, or *keypad*.
 
 <details>
 <summary>How it works</summary>
 
 It's simple component that has two functions and two delegates.
 
-```cpp
+```c++
 void UnlockObjects();
 void LockObjects();
 
 FOnUnlockObjectsSignature OnUnlockObjectsDelegate;
 FOnLockObjectsSignature OnLockObjectsDelegate;
-
 ```
 
-Delegates are `MULTICAST` so we can bind more than one function. We `Broadcast` them in functions `UnlockItems` and `LockItems`
+Delegates are `MULTICAST` so they can bind more than one function.
+
+```c++
+DECALRE_MULTICAST_DELEGATE(FOnUnlockObjectsSignature)
+DECLARE_MULTICAST_DELEGATE(FOnLockObjectsSignature)
+```
+
+We `Broadcast` them in functions `UnlockObjects` and `LockObjects`
+
+```c++
+void UERUnlockerComponent::UnlockObjects()
+{
+    OnUnlockObjectsDelegate.Broadcast();
+}
+
+void UERUnlockerComponent::LockObjects()
+{
+    OnLockObjectsDelegate.Broadcast();
+}
+```
+
+</details>
+
+<details>
+<summary>How to use</summary>
+
+All we have to do is add this component to `Actor` that should has ability to **unlock** and **lock**.  
+After that we can use both `UnlockObjects` and `LockObjects` as we wish.
+
+***C++***  
+.h
+```c++
+UPROPERTY(VisibleAnywhere)
+TObjectPtr<UERUnlockerComponent> UnlockerComponent;
+```
+constructor
+```c++
+UnlockerComponent = CreateDefaultSubobject<UERUnlockComponent>(TEXT("UnlockerComponent"));
+```
+
+***Blueprints***  
+
+
+
 
 </details>
 

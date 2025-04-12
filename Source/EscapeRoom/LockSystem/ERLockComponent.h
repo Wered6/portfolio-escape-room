@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnlockSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockSignature);
 
-UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent), DisplayName="Lock Component")
 class ESCAPEROOM_API UERLockComponent : public UActorComponent
 {
 	GENERATED_BODY()
