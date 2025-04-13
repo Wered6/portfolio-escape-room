@@ -428,7 +428,9 @@ UnlockerComponent->UnlockObjects();
 // or
 UnlockerComponent->LockObjects();
 ```
-***Blueprints***
+***Blueprints***  
+![image](https://github.com/user-attachments/assets/fd7853a2-f1b1-4f2e-84c7-485b691dea2c)
+
 
 </details>
 
