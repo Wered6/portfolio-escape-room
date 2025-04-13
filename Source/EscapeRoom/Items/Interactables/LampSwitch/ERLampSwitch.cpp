@@ -22,5 +22,5 @@ void AERLampSwitch::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InteractableComp->AddOutlineMeshComponent(FrameMesh);
+	InteractableComponent->AddOutlineMeshComponent(FrameMesh);
 }

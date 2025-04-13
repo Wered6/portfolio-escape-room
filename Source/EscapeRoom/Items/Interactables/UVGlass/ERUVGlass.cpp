@@ -19,7 +19,7 @@ void AERUVGlass::InteractHoldTriggered_Implementation()
 {
 	Super::InteractHoldTriggered_Implementation();
 
-	AERCharacter* Character{Cast<AERCharacter>(InteractableComp->GetInteractInstigator())};
+	AERCharacter* Character{Cast<AERCharacter>(InteractableComponent->GetInteractInstigator())};
 
 #pragma region Nullchecks
 	if (!Character)

@@ -105,8 +105,8 @@ AERKeypadBase::AERKeypadBase()
 	HelpLight->SetSourceHeight(4.f);
 	HelpLight->SetBarnDoorLength(1.f);
 
-	InteractableComp->bCanInteract = true;
-	InteractableComp->bUseCustomInteractArea = true;
+	InteractableComponent->bCanInteract = true;
+	InteractableComponent->bUseCustomInteractArea = true;
 
 	InteractArea = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractArea"));
 	InteractArea->SetCollisionProfileName("InteractArea");
@@ -123,7 +123,7 @@ void AERKeypadBase::BeginPlay()
 	GreenLedDynMat = GreenLedMesh->CreateDynamicMaterialInstance(0);
 	RedLedDynMat = RedLedMesh->CreateDynamicMaterialInstance(0);
 
-	InteractableComp->AddOutlineMeshComponent(BodyMesh);
+	InteractableComponent->AddOutlineMeshComponent(BodyMesh);
 }
 
 void AERKeypadBase::EnterKeypadMode()

@@ -21,7 +21,7 @@ void AERKey::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InteractableComp->AddOutlineMeshComponent(KeyMesh);
+	InteractableComponent->AddOutlineMeshComponent(KeyMesh);
 }
 
 void AERKey::InteractHoldTriggered_Implementation()

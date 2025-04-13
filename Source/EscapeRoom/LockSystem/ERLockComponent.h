@@ -21,9 +21,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	void Unlock();
-	void Lock();
-
 	UFUNCTION(BlueprintGetter, Category="ER|Lock")
 	FORCEINLINE bool GetIsLocked() const
 	{
@@ -36,6 +33,9 @@ public:
 	FOnLockSignature OnLockDelegate;
 
 private:
+	void Unlock();
+	void Lock();
+
 	void PopulateUnlockersFromTags();
 	void BindUnlockers();
 

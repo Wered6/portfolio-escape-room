@@ -34,6 +34,7 @@ public:
 	virtual bool GetCanInteract_Implementation() override;
 	virtual EERInteractType GetInteractType_Implementation() override;
 
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<UERInteractableComponent> InteractableComp;
+	TObjectPtr<UERInteractableComponent> InteractableComponent;
 };

@@ -9,70 +9,70 @@ AERInteractableActorBase::AERInteractableActorBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	InteractableComp = CreateDefaultSubobject<UERInteractableComponent>(TEXT("InteractableComp"));
+	InteractableComponent = CreateDefaultSubobject<UERInteractableComponent>(TEXT("InteractableComponent"));
 }
 
 void AERInteractableActorBase::DisplayInteractionUI_Implementation(const bool bShowInteract)
 {
-	InteractableComp->DisplayInteractionUI(bShowInteract);
+	InteractableComponent->DisplayInteractionUI(bShowInteract);
 }
 
 void AERInteractableActorBase::InteractPressStarted_Implementation(AActor* OtherInstigator)
 {
-	InteractableComp->InteractPressStarted(OtherInstigator);
+	InteractableComponent->InteractPressStarted(OtherInstigator);
 }
 
 void AERInteractableActorBase::InteractPressTriggered_Implementation()
 {
-	InteractableComp->InteractPressTriggered();
+	InteractableComponent->InteractPressTriggered();
 }
 
 void AERInteractableActorBase::InteractPressCompleted_Implementation()
 {
-	InteractableComp->InteractPressCompleted();
+	InteractableComponent->InteractPressCompleted();
 }
 
 float AERInteractableActorBase::InteractHoldStarted_Implementation(AActor* OtherInstigator)
 {
-	return InteractableComp->InteractHoldStarted(OtherInstigator);
+	return InteractableComponent->InteractHoldStarted(OtherInstigator);
 }
 
 void AERInteractableActorBase::InteractHoldOngoing_Implementation(const float ElapsedSeconds)
 {
-	InteractableComp->InteractHoldOngoing(ElapsedSeconds);
+	InteractableComponent->InteractHoldOngoing(ElapsedSeconds);
 }
 
 void AERInteractableActorBase::InteractHoldTriggered_Implementation()
 {
-	InteractableComp->InteractHoldTriggered();
+	InteractableComponent->InteractHoldTriggered();
 }
 
 void AERInteractableActorBase::InteractHoldCanceled_Implementation()
 {
-	InteractableComp->InteractHoldCanceled();
+	InteractableComponent->InteractHoldCanceled();
 }
 
 void AERInteractableActorBase::InteractHoldCompleted_Implementation()
 {
-	InteractableComp->InteractHoldCompleted();
+	InteractableComponent->InteractHoldCompleted();
 }
 
 bool AERInteractableActorBase::DoesUseCustomInteractArea_Implementation()
 {
-	return InteractableComp->DoesUseCustomInteractArea();
+	return InteractableComponent->DoesUseCustomInteractArea();
 }
 
 void AERInteractableActorBase::SetCanInteract_Implementation(const bool bNewCanInteract)
 {
-	InteractableComp->SetCanInteract(bNewCanInteract);
+	InteractableComponent->SetCanInteract(bNewCanInteract);
 }
 
 bool AERInteractableActorBase::GetCanInteract_Implementation()
 {
-	return InteractableComp->GetCanInteract();
+	return InteractableComponent->GetCanInteract();
 }
 
 EERInteractType AERInteractableActorBase::GetInteractType_Implementation()
 {
-	return InteractableComp->GetInteractType();
+	return InteractableComponent->GetInteractType();
 }

@@ -24,14 +24,14 @@ AERDoor::AERDoor()
 
 	LockComponent = CreateDefaultSubobject<UERLockComponent>(TEXT("LockComponent"));
 
-	InteractableComp->AddOutlineMeshComponent(HandleMesh);
+	InteractableComponent->AddOutlineMeshComponent(HandleMesh);
 }
 
 void AERDoor::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
-	InteractableComp->InteractCategory = LockComponent->GetIsLocked() ? EERInteractCategory::Unlock : EERInteractCategory::Open;
+	InteractableComponent->InteractCategory = LockComponent->GetIsLocked() ? EERInteractCategory::Unlock : EERInteractCategory::Open;
 }
 
 void AERDoor::BeginPlay()
@@ -43,5 +43,5 @@ void AERDoor::BeginPlay()
 
 void AERDoor::OnUnlockHandle()
 {
-	InteractableComp->SetInteractCategory(EERInteractCategory::Open);
+	InteractableComponent->SetInteractCategory(EERInteractCategory::Open);
 }

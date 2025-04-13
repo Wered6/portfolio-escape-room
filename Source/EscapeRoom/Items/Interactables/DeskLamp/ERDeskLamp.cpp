@@ -19,11 +19,11 @@ AERDeskLamp::AERDeskLamp()
 	LightComp->SetupAttachment(LampMesh);
 	LightComp->SetVisibility(false);
 
-	InteractableComp->AddOutlineMeshComponent(LampMesh);
-	InteractableComp->bUseCustomInteractArea = true;
-	InteractableComp->InteractType = EERInteractType::Hold;
-	InteractableComp->InteractCategory = EERInteractCategory::Open;
-	InteractableComp->HoldTimeThreshold = 0.5f;
+	InteractableComponent->AddOutlineMeshComponent(LampMesh);
+	InteractableComponent->bUseCustomInteractArea = true;
+	InteractableComponent->InteractType = EERInteractType::Hold;
+	InteractableComponent->InteractCategory = EERInteractCategory::Open;
+	InteractableComponent->HoldTimeThreshold = 0.5f;
 
 	WidgetAttachment = CreateDefaultSubobject<USceneComponent>(TEXT("WidgetAttachment"));
 	WidgetAttachment->SetupAttachment(LampMesh);

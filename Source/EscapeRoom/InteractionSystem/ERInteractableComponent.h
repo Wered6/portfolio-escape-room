@@ -16,7 +16,7 @@ enum class EERInteractCategory : uint8;
  * This component provides support for implementing interactable objects and handling player interaction logic.
  * Only for InteractableActorBase, InteractablePawnBase, InteractableCharacterBase.
  */
-UCLASS(NotBlueprintable, NotBlueprintType)
+UCLASS(NotBlueprintable, NotBlueprintType, DisplayName="Interactable Component")
 class ESCAPEROOM_API UERInteractableComponent : public UActorComponent
 {
 	GENERATED_BODY()

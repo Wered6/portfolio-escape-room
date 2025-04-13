@@ -363,12 +363,12 @@ We can unlock locked object with as many unlockers as we want, and vice versa - 
 
 # Implementations
 
-- [**Lock component**](#lock-component-code) ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
 - [**Unlocker component**](#unlocker-component-code) ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
+- [**Lock component**](#lock-component-code) ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
 
 # Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
 
-Component for objects that can **unlock** locked objects, such as a *key*, *lever*, or *keypad*.
+Component for objects that can **unlock** locked objects, such as a *key*, *lever*, *keypad* etc.
 
 <details>
 <summary>How it works</summary>
@@ -409,8 +409,8 @@ void UERUnlockerComponent::LockObjects()
 <details>
 <summary>How to use</summary>
 
-All we have to do is add this component to `Actor` that should has ability to **unlock** and **lock**.  
-After that we can use both `UnlockObjects` and `LockObjects` as we wish.
+Add it to an object that should has ability to *unlock/lock* objects that have **lock component**.  
+Then use functions `Unlock()` and `Lock()` when you want.
 
 ***C++***  
 .h
@@ -420,27 +420,103 @@ TObjectPtr<UERUnlockerComponent> UnlockerComponent;
 ```
 constructor
 ```c++
-UnlockerComponent = CreateDefaultSubobject<UERUnlockComponent>(TEXT("UnlockerComponent"));
+UnlockerComponent = CreateDefaultSuobject<UERUnlockerComponent>();
 ```
-
-***Blueprints***  
-
-![image](https://github.com/user-attachments/assets/cb798630-0089-4681-86f8-0c781d8ebd80)
-
+use
+```c++
+UnlockerComponent->UnlockObjects();
+// or
+UnlockerComponent->LockObjects();
+```
+***Blueprints***
 
 </details>
 
 # Lock component ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
 
-Component which we want to add to object that should has lock. For example door.
+Component for objects that can be **locked** such as *door*, *chest*, *drawer* etc.  
 
 <details>
 <summary>How it works</summary>
 
-At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.  
-Then checks if every actor in `Unlockers` array has `UnlockerComponent`, if it does -
+At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.
+
+```c++
+for (const FName Tag : UnlockersTags)
+{
+    ...
+    TArray<AActor*> TaggedActors;
+    UGameplayStatics::GetAllActorsWithTag(this, Tag, TaggedActors);
+    
+    Unlockers.Append(TaggedActors);
+}
+```
+
+Then checks if every actor in `Unlockers` array has `UnlockerComponent`.  
+If it does - it binds `Unlock()` and `Lock()` functions to `OnUnlockObjectsDelegate` and `OnLockObjectsDelegate` respectively.
+
+```c++
+for (const AActor* Object : Unlockers)
+{
+    UERUnlockerComponent* UnlockerComponent{Object->FindComponentByClass<UERUnlockerComponent>()};
+    if (UnlockerComponent)
+    {
+        UnlockerComponent->OnUnlockObjectsDelegate.AddUObject(this, &UERLockComponent::Unlock);
+        UnlockerComponent->OnLockObjectsDelegate.AddUObject*th9s, &UERLockComponent::Lock);
+    }
+    ...
+}
+```
+
+LockComponent has also two functions and two delegates, plus one getter to get if object is *locked*.
+
+```c++
+public:
+    UFUNCTION(BlueprintGetter, Category="ER|Lock")
+    FORCEINLINE bool GetIsLocked() const
+    {
+        return bIsLocked;
+    }
+    
+    UPROPERTY(BlueprintAssignable, Category="ER|Lock")
+    FOnUnlockSignature OnUnlockDelegate;
+    UPROPERTY(BlueprintAssignable, Category="ER|Lock")
+    FOnLockSignature OnLockDelegate;
+    
+private:
+    void Unlock();
+    void Lock();
+```
+
+Delegates are `MULTICAST` and `DYNAMIC`, so they are also exposed to Blueprints and can bind multiple functions.  
+We can use them to delegate actions that should happen after unlocking/locking a specific object.  
+Unlock() and Lock() functions are simple and change the bIsLocked member to false and true, respectively.
+
+```c++
+void UERLockComponent::Unlock()
+{
+    if (bIsLocked)
+    {
+        bIsLocked = false;
+        OnUnlockDelegate.Broadcast();
+    }
+}
+
+void UERLockComponent::Lock()
+{
+    if (!bIsLocked)
+    {
+        bIsLocked = true;
+        OnLockDelegate.Broadcast();
+    }
+}
+```
 
 </details>
 
+<details>
+<summary>How to use</summary>
+
+</details>
 
 </details>

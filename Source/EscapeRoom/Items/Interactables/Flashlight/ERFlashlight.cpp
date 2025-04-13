@@ -60,7 +60,7 @@ void AERFlashlight::BeginPlay()
 
 	Super::BeginPlay();
 
-	InteractableComp->AddOutlineMeshComponent(FlashlightMesh);
+	InteractableComponent->AddOutlineMeshComponent(FlashlightMesh);
 
 	// TODO try to set decals to full invisible
 	// TODO using metal isn't good, find something else
@@ -82,7 +82,7 @@ void AERFlashlight::InteractHoldTriggered_Implementation()
 {
 	Super::InteractHoldTriggered_Implementation();
 
-	AERCharacter* Character{Cast<AERCharacter>(InteractableComp->GetInteractInstigator())};
+	AERCharacter* Character{Cast<AERCharacter>(InteractableComponent->GetInteractInstigator())};
 
 #pragma region Nullchecks
 	if (!Character)
