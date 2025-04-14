@@ -20,7 +20,9 @@ class ESCAPEROOM_API UERUnlockerComponent : public UActorComponent
 public:
 	UERUnlockerComponent();
 
+	UFUNCTION(BlueprintCallable, Category="ER|Unlocker")
 	void UnlockObjects();
+	UFUNCTION(BlueprintCallable, Category="ER|Unlocker")
 	void LockObjects();
 
 	FOnUnlockObjectsSignature OnUnlockObjectsDelegate;

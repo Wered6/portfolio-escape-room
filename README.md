@@ -376,7 +376,9 @@ Component for objects that can **unlock** locked objects, such as a *key*, *leve
 It's simple component that has two functions and two delegates.
 
 ```c++
+UFUNCTION(BlueprintCallable, Category="ER|Unlocker")
 void UnlockObjects();
+UFUNCTION(BlueprintCallable, Category="ER|Unlocker")
 void LockObjects();
 
 FOnUnlockObjectsSignature OnUnlockObjectsDelegate;
