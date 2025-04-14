@@ -491,6 +491,20 @@ void UERLockComponent::Lock()
 <details>
 <summary>How to use</summary>
 
+***C++***  
+Initialization  
+.h
+```c++
+UPROPERTY(VisibleAnywhere)
+TObjectPtr<UERLockComponent> LockComponent;
+```
+constructor
+```c++
+LockComponent = CreateDefaultSubobject<UERLockComponent>(TEXT("LockComponent"));
+```
+***Blueprints***  
+Initialization  
+Use  
 </details>
 
 </details>
