@@ -10,7 +10,7 @@ DECLARE_MULTICAST_DELEGATE(FOnUnlockObjectsSignature)
 DECLARE_MULTICAST_DELEGATE(FOnLockObjectsSignature)
 
 /**
- * A component that can unlock and lock objects with LockComponent.
+ * A component that can unlock and lock objects that have LockComponent.
  */
 UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent), DisplayName="Unlocker Component")
 class ESCAPEROOM_API UERUnlockerComponent : public UActorComponent

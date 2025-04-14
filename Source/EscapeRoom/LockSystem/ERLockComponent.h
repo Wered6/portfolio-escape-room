@@ -9,6 +9,9 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnlockSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockSignature);
 
+/**
+ * A component that can be unlocked and locked by objects that have UnlockerComponent.
+ */
 UCLASS(ClassGroup=(Lock), meta=(BlueprintSpawnableComponent), DisplayName="Lock Component")
 class ESCAPEROOM_API UERLockComponent : public UActorComponent
 {
