@@ -57,23 +57,19 @@ It's easy to add to C++ class or Blueprint class.
 
 ***C++***  
 .h
-
 ```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<UERInteractComponent> InteractComponent;
 ```
-
 constructor
-
 ```c++
 InteractComponent = CreateDefaultSubobject<UERInteractComponent>(TEXT("InteractComponent"));
 ```
-
 ***Blueprints***  
-![image](https://github.com/user-attachments/assets/ed71782c-2208-4374-b5a4-bb7e9a327dc1)
+<img src="https://github.com/user-attachments/assets/ed71782c-2208-4374-b5a4-bb7e9a327dc1" width="700">
 
 In both scenarios its works after setting up IMC and Input Actions.  
-![image](https://github.com/user-attachments/assets/dce343fc-4d72-459d-80c9-4657aeb85685)
+<img src="https://github.com/user-attachments/assets/dce343fc-4d72-459d-80c9-4657aeb85685" width="700">
 
 </details>
 
@@ -86,11 +82,11 @@ I made this system with enhanced input system's capabilities in mind. So there a
 
 The "Press" input action has a *Pressed* trigger, so it triggers only once.
 
-![image](https://github.com/user-attachments/assets/eec78740-9d52-469f-b4e0-5092c3d70ddc)
+<img src="https://github.com/user-attachments/assets/eec78740-9d52-469f-b4e0-5092c3d70ddc" width="550">
 
 Hold input action has *Hold* trigger and `OneShot` marked, so after `HoldTimeThreshold` it triggers only once.
 
-![image](https://github.com/user-attachments/assets/682a9e47-b7b8-4e3a-b24f-d5982b3dc4bf)
+<img src="https://github.com/user-attachments/assets/682a9e47-b7b8-4e3a-b24f-d5982b3dc4bf" width="550">
 
 Thanks to this trigger we can visualize it using [Progress circle](#progress-circle-code).
 
@@ -109,7 +105,6 @@ interactable component.
 
 ***C++***  
 .h
-
 ```c++
 UCLASS()
 class ESCAPEROOM_API AKey : public AERInteractableActorBase
@@ -124,9 +119,8 @@ class ESCAPEROOM_API AKeypad : public AERInteractablePawnBase
 UCLASS()
 class ESCAPEROOM_API ANPC : public AERInteractableCharacterBase
 ```
-
 ***Blueprints***  
-![image](https://github.com/user-attachments/assets/b1c97b89-6c7d-410a-8277-f43fa91dbb37)
+<img src="https://github.com/user-attachments/assets/b1c97b89-6c7d-410a-8277-f43fa91dbb37" width="600">
 
 </details>
 
@@ -138,10 +132,8 @@ this component we can easily change properties via C++ or inside blueprint detai
 <details>
 <summary>How to use</summary>
 
-***C++***
-
+***C++***  
 constructor
-
 ```c++
 InteractableComp->InteractCategory = EERInteractCategory::Collect;
 InteractableComp->InteractType = EERInteractType::Hold;
@@ -153,7 +145,6 @@ InteractableComp->HoldTimeThreshold = 1.f;
 InteractableComp->bCanInteract = true;
 InteractableComp->bUseCustomInteractArea = true;
 ```
-
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/2b9d2281-8d45-4e90-9883-88fbc9544998)
 
@@ -181,7 +172,6 @@ To select which mesh should outline we have to add them to array `OutlineMeshCom
 
 ***C++***  
 constructor or begin play
-
 ```c++
 InteractableComp->AddOutlineMeshComponent(KeyMesh);
 
@@ -189,7 +179,6 @@ InteractableComp->AddOutlineMeshComponent(KeyMesh);
 
 InteractableComp->SetOutlineMeshComponents(OutlineMeshesArray);
 ```
-
 ***Blueprints***  
 <img src="https://github.com/user-attachments/assets/9ae56ca0-2b4b-4082-b8fe-779e59d85b76" width="800">  
 <img src="https://github.com/user-attachments/assets/1028a9e1-74c9-4eca-85ca-f4abda771bfb" width="800">
@@ -206,20 +195,16 @@ collision with collision preset `InteractArea` and we can adjust its attachment,
 
 ***C++***  
 .h
-
 ```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<UBoxComponent> InteractBox;
 ```
-
 constructor
-
 ```c++
 InteractableComp->bUseCustomInteractArea = true;
 InteractBox = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractBox"));
 InteractBox->SetCollisionProfileName(TEXT("InteractArea"));
 ```
-
 ***Blueprints***
 
 <img src="https://github.com/user-attachments/assets/1162e3b6-85ea-4bfa-9d88-35f999d0aa18" width="600">
@@ -238,19 +223,15 @@ function - `GetWidgetAttachmentComponent`. Thanks to this we can reattach and re
 
 ***C++***  
 .h
-
 ```c++
 UPROPERTY(VisibleAnywhere)
 TObjectPtr<USceneComponent> WidgetAttachment;
 ```
-
 constructor
-
 ```c++
 WidgetAttachment = CreateDefaultSubobject<USceneComponent>(TEXT("WidgetAttachment"));
 WidgetAttachment->SetupAttachment(KeyMesh);
 ```
-
 ***Blueprints***
 
 <img src="https://github.com/user-attachments/assets/88df66d3-6728-4430-bd24-57718d0f86a9" width="600">
@@ -286,13 +267,10 @@ We can override them in C++ and Blueprints.
 
 ***C++***  
 .h
-
 ```c++
 virtual void InteractHoldTriggered_Implementation() override;
 ```
-
 .cpp
-
 ```c++
 void AERKey::InteractHoldTriggered_Implementation()
 {
@@ -301,7 +279,6 @@ void AERKey::InteractHoldTriggered_Implementation()
   // logic
 }
 ```
-
 ***Blueprints***  
 ![image](https://github.com/user-attachments/assets/71406912-cdd8-495e-8533-5d5bbaf2e8f2)
 
@@ -374,7 +351,6 @@ Component for objects that can **unlock** locked objects, such as a *key*, *leve
 <summary>How it works</summary>
 
 It's simple component that has two functions and two delegates.
-
 ```c++
 UFUNCTION(BlueprintCallable, Category="ER|Unlocker")
 void UnlockObjects();
@@ -384,16 +360,12 @@ void LockObjects();
 FOnUnlockObjectsSignature OnUnlockObjectsDelegate;
 FOnLockObjectsSignature OnLockObjectsDelegate;
 ```
-
 Delegates are `MULTICAST` so they can bind more than one function.
-
 ```c++
 DECALRE_MULTICAST_DELEGATE(FOnUnlockObjectsSignature)
 DECLARE_MULTICAST_DELEGATE(FOnLockObjectsSignature)
 ```
-
 We `Broadcast` them in functions `UnlockObjects` and `LockObjects`
-
 ```c++
 void UERUnlockerComponent::UnlockObjects()
 {
@@ -433,10 +405,10 @@ UnlockerComponent->LockObjects();
 ```
 ***Blueprints***  
 Initialization  
-![image](https://github.com/user-attachments/assets/fd7853a2-f1b1-4f2e-84c7-485b691dea2c)  
+<img src="https://github.com/user-attachments/assets/fd7853a2-f1b1-4f2e-84c7-485b691dea2c" width="500">  
 Use  
-![image](https://github.com/user-attachments/assets/da373489-ceb1-457c-a347-c3061f47a2dd)  
-![image](https://github.com/user-attachments/assets/001d29a3-e562-4445-8f92-1b06500c3d3c)  
+<img src="https://github.com/user-attachments/assets/da373489-ceb1-457c-a347-c3061f47a2dd" width="500">  
+<img src="https://github.com/user-attachments/assets/001d29a3-e562-4445-8f92-1b06500c3d3c" width="500">  
 
 
 </details>
@@ -449,7 +421,6 @@ Component for objects that can be **locked** such as *door*, *chest*, *drawer* e
 <summary>How it works</summary>
 
 At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.
-
 ```c++
 for (const FName Tag : UnlockersTags)
 {
@@ -460,10 +431,8 @@ for (const FName Tag : UnlockersTags)
     Unlockers.Append(TaggedActors);
 }
 ```
-
 Then checks if every actor in `Unlockers` array has `UnlockerComponent`.  
 If it does - it binds `Unlock()` and `Lock()` functions to `OnUnlockObjectsDelegate` and `OnLockObjectsDelegate` respectively.
-
 ```c++
 for (const AActor* Object : Unlockers)
 {
@@ -476,9 +445,7 @@ for (const AActor* Object : Unlockers)
     ...
 }
 ```
-
 LockComponent has also two functions and two delegates, plus one getter to get if object is *locked*.
-
 ```c++
 public:
     UFUNCTION(BlueprintGetter, Category="ER|Lock")
@@ -496,11 +463,9 @@ private:
     void Unlock();
     void Lock();
 ```
-
-Delegates are `MULTICAST` and `DYNAMIC`, so they are also exposed to Blueprints and can bind multiple functions.  
+Delegates are `MULTICAST` and `DYNAMIC`, so they are exposed to Blueprints and can bind multiple functions.  
 We can use them to delegate actions that should happen after unlocking/locking a specific object.  
 Unlock() and Lock() functions are simple and change the bIsLocked member to false and true, respectively.
-
 ```c++
 void UERLockComponent::Unlock()
 {
