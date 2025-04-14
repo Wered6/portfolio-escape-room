@@ -345,7 +345,7 @@ We can unlock locked object with as many unlockers as we want, and vice versa - 
 
 # Unlocker component ([code](Source/EscapeRoom/LockSystem/ERUnlockerComponent.h))
 
-Component for objects that can **unlock** locked objects, such as a *key*, *lever*, *keypad* etc.
+Component for objects that can **unlock** locked objects, such as a *key*, a *lever*, a *keypad* etc.
 
 <details>
 <summary>How it works</summary>
@@ -365,7 +365,7 @@ Delegates are `MULTICAST` so they can bind more than one function.
 DECALRE_MULTICAST_DELEGATE(FOnUnlockObjectsSignature)
 DECLARE_MULTICAST_DELEGATE(FOnLockObjectsSignature)
 ```
-We `Broadcast` them in functions `UnlockObjects` and `LockObjects`
+They are **broadcast** respectively in functions `UnlockObjects` and `LockObjects`
 ```c++
 void UERUnlockerComponent::UnlockObjects()
 {
@@ -377,14 +377,13 @@ void UERUnlockerComponent::LockObjects()
     OnLockObjectsDelegate.Broadcast();
 }
 ```
-
 </details>
 
 <details>
 <summary>How to use</summary>
 
 Add it to an object that should has ability to *unlock/lock* objects that have **lock component**.  
-Then use functions `Unlock()` and `Lock()` when you want.
+Then use functions `UnlockObjects()` and `LockObjects()` where you want. It will open all connected objects with **unlocker component**.
 
 ***C++***  
 Initialization  
@@ -415,12 +414,13 @@ Use
 
 # Lock component ([code](Source/EscapeRoom/LockSystem/ERLockComponent.h))
 
-Component for objects that can be **locked** such as *door*, *chest*, *drawer* etc.  
+Component for objects that can be **locked** such as a *door*, a *chest*, a *drawer* etc.  
 
 <details>
 <summary>How it works</summary>
 
-At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.
+At `BeginPlay` it populates `Unlockers` array from `UnlockersTags`, adding `TaggedActors` to `Unlockers`.  
+'Unlockers' array can be populated also in editor by picking actors from scene.
 ```c++
 for (const FName Tag : UnlockersTags)
 {
@@ -432,7 +432,7 @@ for (const FName Tag : UnlockersTags)
 }
 ```
 Then checks if every actor in `Unlockers` array has `UnlockerComponent`.  
-If it does - it binds `Unlock()` and `Lock()` functions to `OnUnlockObjectsDelegate` and `OnLockObjectsDelegate` respectively.
+If it does - it binds `Unlock()` and `Lock()` functions to `OnUnlockObjectsDelegate` and `OnLockObjectsDelegate` from `UnlockerComponent` respectively.
 ```c++
 for (const AActor* Object : Unlockers)
 {
@@ -445,7 +445,7 @@ for (const AActor* Object : Unlockers)
     ...
 }
 ```
-LockComponent has also two functions and two delegates, plus one getter to get if object is *locked*.
+LockComponent has also **two functions** and two delegates, plus one **getter** to get if object is *locked*.
 ```c++
 public:
     UFUNCTION(BlueprintGetter, Category="ER|Lock")
@@ -463,9 +463,9 @@ private:
     void Unlock();
     void Lock();
 ```
-Delegates are `MULTICAST` and `DYNAMIC`, so they are exposed to Blueprints and can bind multiple functions.  
-We can use them to delegate actions that should happen after unlocking/locking a specific object.  
-Unlock() and Lock() functions are simple and change the bIsLocked member to false and true, respectively.
+Delegates are `MULTICAST` and `DYNAMIC`, so they are **exposed** to Blueprints and can bind **multiple** functions.  
+We can use them to delegate actions that should happen after **unlocking/locking** a specific object.  
+`Unlock()` and `Lock()` functions `broadcast` those delegates and change the `bIsLocked` member to `false` and `true`, respectively.
 ```c++
 void UERLockComponent::Unlock()
 {
