@@ -528,7 +528,8 @@ Adding objects directly to the `Unlockers` array by picking actors from the scen
 Adding objects to the `Unlockers` array with `UnlockersTags`.  
 To correctly add tagged actors to the `Unlockers` array using `UnlockersTags`, they must have the corresponding tag and an `UnlockerComponent`.  
 <img src="https://github.com/user-attachments/assets/fd648762-1d35-430e-a094-52c03feffde3" width="600">  
-Binding functions to `OnUnlockDelegate`/`OnLockDelegate`.
+Binding functions to `OnUnlockDelegate`/`OnLockDelegate`.  
+<img src="https://github.com/user-attachments/assets/aca7ad6f-30fa-490c-bd27-4160882a4001" width="900">  
 
 </details>
 
