@@ -330,8 +330,8 @@ In case screen is not readable enough - [here](https://blueprintue.com/render/n1
 
 # Lock System ([code](Source/EscapeRoom/LockSystem))
 
-I implemented a designer-friendly customizable lock system, based on two components.  
-We can unlock locked object with as many unlockers as we want, and vice versa - any unlocker can unlock as many locked objects as we want.
+I implemented a **designer-friendly** lock system, based on **two components**.  
+We can **unlock/lock** object with as many **unlockers** as we want, and vice versa - any **unlocker** can **unlock/lock** as many objects as we want.
 
 <details>
 <summary>More</summary>
@@ -504,7 +504,15 @@ LockComponent = CreateDefaultSubobject<UERLockComponent>(TEXT("LockComponent"));
 ```
 ***Blueprints***  
 Initialization  
+![image](https://github.com/user-attachments/assets/0d5c1636-7027-4b62-9edf-86f297a7b7d2)  
 Use  
+Adding objects directly to the `Unlockers` array by picking actors from the scene.  
+![image](https://github.com/user-attachments/assets/ccc8ba9f-3408-4c3e-8c3c-db5839f34c35)  
+Adding objects to the `Unlockers` array with `UnlockersTags`.  
+To correctly add tagged actors to the `Unlockers` array using `UnlockersTags`, they must have the corresponding tag and an `UnlockerComponent`.  
+![image](https://github.com/user-attachments/assets/fd648762-1d35-430e-a094-52c03feffde3)  
+
+
 </details>
 
 </details>
