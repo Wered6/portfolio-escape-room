@@ -502,16 +502,33 @@ constructor
 ```c++
 LockComponent = CreateDefaultSubobject<UERLockComponent>(TEXT("LockComponent"));
 ```
+Use  
+*We can only populate `Unlockers` array in editor.*  
+
+Binding functions to `OnUnlockDelegate`/`OnLockDelegate`.
+```c++
+LockComponent->OnUnlockDelegate.AddDynamic(this, &ADoor::OnUnlockHandle);
+LockComponent->OnLockDelegate.AddDynamic(this, &ADoor::OnLockHandle);
+...
+void ADoor::OnUnlockHandle()
+{
+    // logic
+}
+void ADoor::OnLockHandle()
+{
+    // logic
+}
+```
 ***Blueprints***  
 Initialization  
-![image](https://github.com/user-attachments/assets/0d5c1636-7027-4b62-9edf-86f297a7b7d2)  
+<img src="https://github.com/user-attachments/assets/0d5c1636-7027-4b62-9edf-86f297a7b7d2" width="600">  
 Use  
 Adding objects directly to the `Unlockers` array by picking actors from the scene.  
-![image](https://github.com/user-attachments/assets/ccc8ba9f-3408-4c3e-8c3c-db5839f34c35)  
+<img src="https://github.com/user-attachments/assets/ccc8ba9f-3408-4c3e-8c3c-db5839f34c35" width="900">  
 Adding objects to the `Unlockers` array with `UnlockersTags`.  
 To correctly add tagged actors to the `Unlockers` array using `UnlockersTags`, they must have the corresponding tag and an `UnlockerComponent`.  
-![image](https://github.com/user-attachments/assets/fd648762-1d35-430e-a094-52c03feffde3)  
-
+<img src="https://github.com/user-attachments/assets/fd648762-1d35-430e-a094-52c03feffde3" width="600">  
+Binding functions to `OnUnlockDelegate`/`OnLockDelegate`.
 
 </details>
 
