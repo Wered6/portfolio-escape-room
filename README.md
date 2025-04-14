@@ -415,6 +415,7 @@ Add it to an object that should has ability to *unlock/lock* objects that have *
 Then use functions `Unlock()` and `Lock()` when you want.
 
 ***C++***  
+Initialization  
 .h
 ```c++
 UPROPERTY(VisibleAnywhere)
@@ -424,14 +425,18 @@ constructor
 ```c++
 UnlockerComponent = CreateDefaultSuobject<UERUnlockerComponent>();
 ```
-use
+Use  
 ```c++
 UnlockerComponent->UnlockObjects();
 // or
 UnlockerComponent->LockObjects();
 ```
 ***Blueprints***  
-![image](https://github.com/user-attachments/assets/fd7853a2-f1b1-4f2e-84c7-485b691dea2c)
+Initialization  
+![image](https://github.com/user-attachments/assets/fd7853a2-f1b1-4f2e-84c7-485b691dea2c)  
+Use  
+![image](https://github.com/user-attachments/assets/da373489-ceb1-457c-a347-c3061f47a2dd)  
+![image](https://github.com/user-attachments/assets/001d29a3-e562-4445-8f92-1b06500c3d3c)  
 
 
 </details>
