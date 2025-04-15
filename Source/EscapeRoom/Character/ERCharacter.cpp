@@ -4,6 +4,7 @@
 #include "ERCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
@@ -12,6 +13,7 @@
 #include "EscapeRoom/Items/Interactables/Flashlight/ERFlashlight.h"
 #include "EscapeRoom/Items/Interactables/UVGlass/ERUVGlass.h"
 #include "EscapeRoom/PlayerController/ERPlayerController.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 AERCharacter::AERCharacter()
 {
@@ -44,31 +46,13 @@ void AERCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UVALID_LOG_DEBUG(DefaultMappingContext)
+
 	PlayerController = Cast<AERPlayerController>(Controller);
 
-#pragma region Nullchecks
-	if (!DefaultMappingContext)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|DefaultMappingContext is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!PlayerController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PlayerController is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(PlayerController)
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem{ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())};
-
-#pragma region Nullchecks
-	if (!Subsystem)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|Subsystem is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
-
 	Subsystem->AddMappingContext(DefaultMappingContext, 0);
 
 	// CDPR
@@ -84,23 +68,11 @@ void AERCharacter::SetLimitMovement(const bool bLimit)
 
 void AERCharacter::SetIndicatorVisibility(const bool bVisible) const
 {
-#pragma region Nullchecks
-	if (!PlayerController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PlayerController is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(PlayerController)
 
 	AERHUD* HUD{Cast<AERHUD>(PlayerController->GetHUD())};
 
-#pragma region Nullchecks
-	if (!HUD)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|HUD is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(HUD)
 
 	HUD->SetIndicatorVisibility(bVisible);
 }
@@ -109,30 +81,11 @@ void AERCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	UEnhancedInputComponent* EnhancedInputComponent{Cast<UEnhancedInputComponent>(PlayerInputComponent)};
+	UVALID_LOG_DEBUG(MoveAction)
+	UVALID_LOG_DEBUG(LookAction)
+	UVALID_LOG_DEBUG(FlashlightChangeColorAction)
 
-#pragma region Nullchecks
-	if (!MoveAction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|MoveAction is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!LookAction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|LookAction is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!FlashlightChangeColorAction)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|FlashlightAction is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!EnhancedInputComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|EnhancedInputComponent is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UEnhancedInputComponent* EnhancedInputComponent{Cast<UEnhancedInputComponent>(PlayerInputComponent)};
 
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AERCharacter::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AERCharacter::Look);
@@ -192,7 +145,10 @@ void AERCharacter::UseFlashlight()
 
 	if (CollectedUVGlasses.IsValidIndex(CollectedUVGlassesIndex))
 	{
-		EquippedFlashlight->TurnOn();
+		if (!EquippedFlashlight->IsTurnOn())
+		{
+			EquippedFlashlight->TurnOn();
+		}
 		EquippedFlashlight->SetUltraVioletColor(CollectedUVGlasses[CollectedUVGlassesIndex++]);
 	}
 	else
@@ -209,13 +165,7 @@ void AERCharacter::EquipFlashlight(AERFlashlight* Flashlight)
 
 	const USkeletalMeshSocket* HandSocket{Mesh1P->GetSocketByName(FName("RightHandSocket"))};
 
-#pragma region Nullchecks
-	if (!HandSocket)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|HandSocket is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(HandSocket)
 
 	HandSocket->AttachActor(EquippedFlashlight, Mesh1P);
 }

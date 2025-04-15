@@ -4,6 +4,7 @@
 #include "ERUVGlass.h"
 #include "EscapeRoom/Character/ERCharacter.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 
 AERUVGlass::AERUVGlass()
@@ -21,13 +22,7 @@ void AERUVGlass::InteractHoldTriggered_Implementation()
 
 	AERCharacter* Character{Cast<AERCharacter>(InteractableComponent->GetInteractInstigator())};
 
-#pragma region Nullchecks
-	if (!Character)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|Character is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(Character)
 
 	Character->CollectUVGlassData(Data);
 }

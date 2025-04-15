@@ -25,6 +25,7 @@ protected:
 public:
 	void TurnOn() const;
 	void TurnOff() const;
+	bool IsTurnOn() const;
 
 	void SetUltraVioletColor(const FUVGlassData& UVGlassData);
 

@@ -7,6 +7,7 @@
 #include "EscapeRoom/Character/ERCharacter.h"
 #include "EscapeRoom/InteractionSystem/ERInteractableComponent.h"
 #include "EscapeRoom/Items/Interactables/UVGlass/ERUVGlass.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 AERFlashlight::AERFlashlight()
 {
@@ -42,19 +43,6 @@ AERFlashlight::AERFlashlight()
 void AERFlashlight::BeginPlay()
 {
 	// code is before Super::BeginPlay because it has to be called before blueprint's BeginPlay
-#pragma region Nullchecks
-	if (!PostProcessMask)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PP_Mask is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!SceneCapture)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|SceneCapture is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
-
 	// Apply the PostProcessMaterial dynamically
 	SceneCapture->PostProcessSettings.WeightedBlendables.Array.Add(FWeightedBlendable(1.f, PostProcessMask));
 
@@ -78,19 +66,18 @@ void AERFlashlight::TurnOff() const
 	SpotLightGlow->SetVisibility(false);
 }
 
+bool AERFlashlight::IsTurnOn() const
+{
+	return SpotLight->GetVisibleFlag() && SpotLightGlow->GetVisibleFlag();
+}
+
 void AERFlashlight::InteractHoldTriggered_Implementation()
 {
 	Super::InteractHoldTriggered_Implementation();
 
 	AERCharacter* Character{Cast<AERCharacter>(InteractableComponent->GetInteractInstigator())};
 
-#pragma region Nullchecks
-	if (!Character)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|Character is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(Character)
 
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Character->EquipFlashlight(this);
@@ -104,34 +91,12 @@ void AERFlashlight::InteractHoldTriggered_Implementation()
 
 void AERFlashlight::SetUltraVioletColor(const FUVGlassData& UVGlassData)
 {
-#pragma region Nullchecks
-	if (!SpotLight)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|SpotLight is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!SpotLightGlow)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|SpotLightGlow is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-	if (!PostProcessMask)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|PostProcessMask is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(PostProcessMask)
 
 	// Modify the material parameters at runtime
 	UMaterialInstanceDynamic* DynamicMaterial{UMaterialInstanceDynamic::Create(PostProcessMask, this)};
 
-#pragma region Nullchecks
-	if (!DynamicMaterial)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|DynamicMaterial is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(DynamicMaterial)
 
 	SpotLight->SetLightColor(UVGlassData.BaseLight);
 	SpotLightGlow->SetLightColor(UVGlassData.GlowLight);
