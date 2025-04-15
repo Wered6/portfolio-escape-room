@@ -14,19 +14,23 @@ class ESCAPEROOM_API AERCabinet : public AActor
 public:
 	AERCabinet();
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
+	void AttachDoorsAndDrawers();
+
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> BodyMesh;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UChildActorComponent> DoorLeft;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UChildActorComponent> DoorRight;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UChildActorComponent> DrawerFirst;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UChildActorComponent> DrawerSecond;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UChildActorComponent> DrawerThird;
+	UPROPERTY(EditInstanceOnly, Category="ER|Cabinet")
+	TObjectPtr<AActor> DoorLeft;
+	UPROPERTY(EditInstanceOnly, Category="ER|Cabinet")
+	TObjectPtr<AActor> DoorRight;
+	UPROPERTY(EditInstanceOnly, Category="ER|Cabinet")
+	TObjectPtr<AActor> DrawerFirst;
+	UPROPERTY(EditInstanceOnly, Category="ER|Cabinet")
+	TObjectPtr<AActor> DrawerSecond;
+	UPROPERTY(EditInstanceOnly, Category="ER|Cabinet")
+	TObjectPtr<AActor> DrawerThird;
 };

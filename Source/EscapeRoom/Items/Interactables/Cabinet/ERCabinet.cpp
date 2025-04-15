@@ -2,6 +2,7 @@
 
 
 #include "ERCabinet.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 
 AERCabinet::AERCabinet()
@@ -11,19 +12,27 @@ AERCabinet::AERCabinet()
 	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RootMesh"));
 	BodyMesh->SetCollisionProfileName(TEXT("BlockAll"));
 	SetRootComponent(BodyMesh);
+}
 
-	DoorLeft = CreateDefaultSubobject<UChildActorComponent>(TEXT("DoorLeft"));
-	DoorLeft->SetupAttachment(BodyMesh);
+void AERCabinet::BeginPlay()
+{
+	Super::BeginPlay();
 
-	DoorRight = CreateDefaultSubobject<UChildActorComponent>(TEXT("DoorRight"));
-	DoorRight->SetupAttachment(BodyMesh);
+	AttachDoorsAndDrawers();
+}
 
-	DrawerFirst = CreateDefaultSubobject<UChildActorComponent>(TEXT("DrawerFirst"));
-	DrawerFirst->SetupAttachment(BodyMesh);
+void AERCabinet::AttachDoorsAndDrawers()
+{
+	UVALID_LOG_DEBUG(DoorLeft)
+	UVALID_LOG_DEBUG(DoorRight)
+	UVALID_LOG_DEBUG(DrawerFirst)
+	UVALID_LOG_DEBUG(DrawerSecond)
+	UVALID_LOG_DEBUG(DrawerThird)
 
-	DrawerSecond = CreateDefaultSubobject<UChildActorComponent>(TEXT("DrawerSecond"));
-	DrawerSecond->SetupAttachment(BodyMesh);
-
-	DrawerThird = CreateDefaultSubobject<UChildActorComponent>(TEXT("DrawerThird"));
-	DrawerThird->SetupAttachment(BodyMesh);
+	const FAttachmentTransformRules AttachmentTransformRules{EAttachmentRule::KeepWorld, true};
+	DoorLeft->AttachToActor(this, AttachmentTransformRules);
+	DoorRight->AttachToActor(this, AttachmentTransformRules);
+	DrawerFirst->AttachToActor(this, AttachmentTransformRules);
+	DrawerSecond->AttachToActor(this, AttachmentTransformRules);
+	DrawerThird->AttachToActor(this, AttachmentTransformRules);
 }

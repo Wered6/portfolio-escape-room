@@ -25,5 +25,4 @@ void UERAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	}
 
 	bHasFlashlight = ERCharacter->HasFlashlight();
-	EquippedFlashlight = ERCharacter->GetEquippedFlashlight();
 }

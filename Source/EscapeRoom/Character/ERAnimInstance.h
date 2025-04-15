@@ -24,8 +24,4 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, Category=Movement, meta=(AllowPrivateAccess="true"))
 	bool bHasFlashlight;
-
-	UPROPERTY()
-	TObjectPtr<AERFlashlight> EquippedFlashlight;
-
 };

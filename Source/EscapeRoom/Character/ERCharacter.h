@@ -95,11 +95,6 @@ public:
 		return EquippedFlashlight ? true : false;
 	}
 
-	FORCEINLINE AERFlashlight* GetEquippedFlashlight() const
-	{
-		return EquippedFlashlight;
-	}
-
 	void EquipFlashlight(AERFlashlight* Flashlight);
 
 	void CollectUVGlassData(const FUVGlassData& UVGlassData);
