@@ -119,8 +119,18 @@ private:
 
 #pragma endregion
 
-	//CDPR
-#pragma region CardinalBird
+#pragma region Techland
+
+public:
+	void OpenVideoOfMe();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="ER|TV|Media")
+	TObjectPtr<UFileMediaSource> VideoOfMeMediaSource;
+
+#pragma endregion
+
+#pragma region CDPR
 
 public:
 	void OpenCardinalBirdVideo();

@@ -3,6 +3,7 @@
 
 #include "ERKeypadTV.h"
 #include "EscapeRoom/Items/NonInteractables/TV/ERTV.h"
+#include "EscapeRoom/Utility/WeredMacros.h"
 
 
 AERKeypadTV::AERKeypadTV()
@@ -14,13 +15,7 @@ void AERKeypadTV::ButtonPressHandle_Implementation(const UStaticMeshComponent* B
 {
 	Super::ButtonPressHandle_Implementation(ButtonMesh, ButtonValue, ButtonName);
 
-#pragma region Nullchecks
-	if (!TV)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%s|TV is nullptr"), *FString(__FUNCTION__))
-		return;
-	}
-#pragma endregion
+	UVALID_LOG_DEBUG(TV)
 
 	switch (ButtonName)
 	{

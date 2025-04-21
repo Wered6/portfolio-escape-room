@@ -24,7 +24,16 @@
 		return 0.f;																										\
 	}																													\
 }
+#define UVALID_LOG_DEBUGB(PointerParam)																					\
+{																														\
+	if (!IsValid(PointerParam))																							\
+	{																													\
+		UE_LOG(LogTemp, Warning, TEXT("%s is nullptr at \"%s#L%d\""), TEXT(#PointerParam),  TEXT(__FILE__), __LINE__)	\
+		return false;																									\
+	}																													\
+}
 #else
 #define UVALID_LOG_DEBUG(PointerParam)  /* No-op in shipping builds */
 #define UVALID_LOG_DEBUGF(PointerParam) /* No-op in shipping builds */
+#define UVALID_LOG_DEBUGB(PointerParam) /* No-op in shipping builds */
 #endif

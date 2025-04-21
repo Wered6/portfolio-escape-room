@@ -8,17 +8,17 @@ Escape room is a project primarily made for class, but it is evolving into my fi
 
 ## 🛠️ Key Mechanics Implemented
 
-| Mechanic                                                                                     | Description                                                     |
-|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| [Interaction System](#interaction-system-code) ([code](Source/EscapeRoom/InteractionSystem)) | FPP interaction system based on raycast                         |
-| [Lock System](#lock-system-code) ([code](Source/EscapeRoom/LockSystem))                      | Lock and unlocker components, may locks - many unlockers        |
-| UV Flashlight (to be documented)                                                             | Reveals hidden clues or writings                                |
-| Interactive Keypads (to be documented)                                                       | Custom keypads for puzzles with code input and validation logic |
-| TV (to be documented)                                                                        | Plays movies or switches to interactive widgets                 |
+| Mechanic                                                                                        | Description                                                     |
+|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| [Interaction System](#interaction-system-code) ([code](Source/EscapeRoom/InteractionSystem))    | FPP interaction system based on raycast                         |
+| [Lock System](#lock-system-code) ([code](Source/EscapeRoom/LockSystem))                         | Lock and unlocker components, may locks - many unlockers        |
+| [UV Flashlight](#uv-flashlight-code) ([code](Source/EscapeRoom/Items/Interactables/Flashlight)) | Reveals hidden clues or writings                                |
+| Interactive Keypads (to be documented)                                                          | Custom keypads for puzzles with code input and validation logic |
+| TV (to be documented)                                                                           | Plays movies or switches to interactive widgets                 |
 
 # Interaction System ([code](Source/EscapeRoom/InteractionSystem))
 
-I implemented a designer-friendly customizable FPP interaction system based on raycast, fully usable in both C++ and Blueprints.
+I implemented a **designer-friendly** FPP interaction system based on **raycast**, fully usable in both C++ and Blueprints.
 
 <details>
 <summary>More</summary>
@@ -352,7 +352,7 @@ In case screen is not readable enough - [here](https://blueprintue.com/render/n1
 
 # Lock System ([code](Source/EscapeRoom/LockSystem))
 
-I implemented a **designer-friendly** lock system, based on **two components**.  
+I implemented a **designer-friendly** lock system, based on **two components**, fully usable in both C++ and Blueprints.  
 We can **unlock/lock** object with as many **unlockers** as we want, and vice versa - any **unlocker** can **unlock/lock** as many objects
 as we want.
 
@@ -584,3 +584,7 @@ Binding functions to `OnUnlockDelegate`/`OnLockDelegate`.
 </details>
 
 </details>
+
+# UV Flashlight ([code](Source/EscapeRoom/Items/Interactables/Flashlight))
+
+I implemented flashlight that **highlights** objects based on their **metalness**.  
