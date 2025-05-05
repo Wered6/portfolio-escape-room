@@ -34,6 +34,9 @@ public:
 private:
 	bool bLimitMovement{};
 
+	UPROPERTY()
+	TObjectPtr<UPawnMovementComponent> MovementComponent;
+
 	/**
 	 * Pawn mesh: 1st person view (arms; seen only by self)
 	 */

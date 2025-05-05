@@ -64,5 +64,5 @@ void AERKeypadHangman::ButtonPressHandle_Implementation(const UStaticMeshCompone
 void AERKeypadHangman::ExitAndDisableInteraction()
 {
 	ExitKeypadMode();
-	SetCanInteract(false);
+	Execute_SetCanInteract(this, false);
 }

@@ -239,19 +239,6 @@ void AERTV::OpenToBeContinued()
 	TVMediaPlayer->OpenSource(ToBeContinuedMediaSource);
 }
 
-void AERTV::OpenVideoOfMe()
-{
-	UVALID_LOG_DEBUG(ScreenDynMat)
-	UVALID_LOG_DEBUG(TVMediaTexture)
-	UVALID_LOG_DEBUG(TVMediaPlayer)
-	UVALID_LOG_DEBUG(VideoOfMeMediaSource)
-
-	ScreenDynMat->SetTextureParameterValue(FName("Texture"), TVMediaTexture);
-
-	TVMediaPlayer->SetLooping(false);
-	TVMediaPlayer->OpenSource(VideoOfMeMediaSource);
-}
-
 void AERTV::OpenCardinalBirdVideo()
 {
 	UVALID_LOG_DEBUG(ScreenDynMat)
@@ -276,4 +263,17 @@ void AERTV::OpenHangman()
 	TVMediaPlayer->SetLooping(false);
 
 	ScreenDynMat->SetTextureParameterValue(FName("Texture"), HangmanWidgetComp->GetRenderTarget());
+}
+
+void AERTV::OpenTechlandEndingVideo()
+{
+	UVALID_LOG_DEBUG(ScreenDynMat)
+	UVALID_LOG_DEBUG(TVMediaTexture)
+	UVALID_LOG_DEBUG(TVMediaPlayer)
+	UVALID_LOG_DEBUG(TechlandEndingVideo)
+
+	ScreenDynMat->SetTextureParameterValue(FName("Texture"), TVMediaTexture);
+
+	TVMediaPlayer->SetLooping(false);
+	TVMediaPlayer->OpenSource(TechlandEndingVideo);
 }

@@ -29,8 +29,8 @@ void AERKeypadTV::ButtonPressHandle_Implementation(const UStaticMeshComponent* B
 	case EKeypadButtonName::OK:
 		switch (Channel)
 		{
-		case 14:
-			TV->OpenCardinalBirdVideo();
+		case 6:
+			TV->OpenTechlandEndingVideo();
 			break;
 		case 2:
 			TV->OpenHangman();

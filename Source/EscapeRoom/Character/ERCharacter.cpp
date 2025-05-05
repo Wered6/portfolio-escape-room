@@ -14,6 +14,7 @@
 #include "EscapeRoom/Items/Interactables/UVGlass/ERUVGlass.h"
 #include "EscapeRoom/PlayerController/ERPlayerController.h"
 #include "EscapeRoom/Utility/WeredMacros.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 AERCharacter::AERCharacter()
 {
@@ -59,6 +60,7 @@ void AERCharacter::BeginPlay()
 	// bLimitMovement = true;
 	// InteractComponent->SetCanCheckInteraction(false);
 	// SetIndicatorVisibility(false);
+	MovementComponent = GetMovementComponent();
 }
 
 void AERCharacter::SetLimitMovement(const bool bLimit)
@@ -100,8 +102,10 @@ void AERCharacter::Move(const FInputActionValue& Value)
 	// Add movement to character
 	if (!bLimitMovement)
 	{
-		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-		AddMovementInput(GetActorRightVector(), MovementVector.X);
+		// If experiencing issues, try using Internal_AddMovementInput instead
+		UVALID_LOG_DEBUG(MovementComponent)
+		MovementComponent->AddInputVector(GetActorForwardVector() * MovementVector.Y);
+		MovementComponent->AddInputVector(GetActorRightVector() * MovementVector.X);
 	}
 }
 
